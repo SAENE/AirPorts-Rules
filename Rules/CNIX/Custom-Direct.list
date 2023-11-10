@@ -1,0 +1,16 @@
+##自定义
+####直连
+DOMAIN-KEYWORD,ptrecord.com
+DOMAIN-KEYWORD,release.ubuntu.com
+IP-CIDR,149.104.15.2/32,no-resolve
+DOMAIN-KEYWORD,westdatacloud.xyz
+DOMAIN-KEYWORD,speedtest
+DOMAIN-KEYWORD,asus
+DOMAIN-KEYWORD,eneziyuan
+DOMAIN-KEYWORD,api-ipv6
+DOMAIN-KEYWORD,ipv6
+DOMAIN-KEYWORD,v6.myip.la
+DOMAIN-KEYWORD,cidian.youdao.com
+DOMAIN-KEYWORD,cn.ultraiso.net
+DOMAIN-KEYWORD,download.manjaro.org
+DOMAIN-KEYWORD,next.itellyou.cn
