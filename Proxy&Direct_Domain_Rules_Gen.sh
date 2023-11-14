@@ -1,7 +1,8 @@
 #!/bin/bash
 echo `date`
 
-File_Path='/home/docker/nginx/config/www/file-share/'
+File_Path='File_Path'
+Source_Path='Source_Path'
 PUID=1000
 PGID=1000
 
@@ -107,19 +108,18 @@ echo -e "\n"
 
 echo "——————————————————————————————————文件写入开始——————————————————————————————————"
 echo "写入代理域名文件"
-cat '/home/docker/subconverter/base/rules/CNIX/Proxy/'*.list >>         "${File_Path}/Proxy-domain.list"
+cat "${Source_Path}/Proxy/"*.list >>         "${File_Path}/Proxy-domain.list"
 echo -e '\n' >> "${File_Path}/Proxy-domain.list"
-cat '/home/docker/subconverter/base/rules/CNIX/Category/'*.list >>      "${File_Path}/Proxy-domain.list"
+cat "${Source_Path}/Category/"*.list >>      "${File_Path}/Proxy-domain.list"
 echo -e '\n' >> "${File_Path}/Proxy-domain.list"
-cat '/home/docker/subconverter/base/rules/CNIX/Custom/'*-Proxy.list >>  "${File_Path}/Proxy-domain.list"
+cat "${Source_Path}/Custom/"*-Proxy.list >>  "${File_Path}/Proxy-domain.list"
 echo "完成"
 echo -e '\n'
 echo "写入直连域名文件"
-cat '/home/docker/subconverter/base/rules/CNIX/Direct/'*.list >>        "${File_Path}/Direct-domain.list"
+cat "${Source_Path}/Direct/"*.list >>        "${File_Path}/Direct-domain.list"
 echo -e '\n' >> "${File_Path}/Direct-domain.list"
-cat '/home/docker/subconverter/base/rules/CNIX/Custom/'*-Direct.list >> "${File_Path}/Direct-domain.list"
+cat "${Source_Path}/Custom/"*-Direct.list >> "${File_Path}/Direct-domain.list"
 echo "完成"
-
 echo "——————————————————————————————————文件写入结束——————————————————————————————————"
 
 echo -e "\n"
