@@ -28,7 +28,7 @@ dns:
   - https://101.198.198.198/dns-query
   - https://doh.pub/dns-query
   nameserver-policy:
-    geosite:cn:
+    "geosite:cn,private":
     - https://223.5.5.5/dns-query
     - https://223.6.6.6/dns-query
     - https://101.198.198.198/dns-query
@@ -42,6 +42,7 @@ dns:
 # external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 tcp-concurrent: true
 unified-delay: true
+find-process-mode: strict
 global-client-fingerprint: random
 keep-alive-interval: 15
 keep-alive-idle: 600
