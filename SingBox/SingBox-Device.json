@@ -42,6 +42,12 @@
                 "server_port": 443,
                 "domain_resolver": "alidns",
                 "detour": "🔰国外流量"
+            },
+            {
+                "tag": "fakeip",
+                "type": "fakeip",
+                "inet4_range": "198.18.0.0\/16",
+                "inet6_range": "fdfe:dcba:9876::1/64"
             }
         ],
         "rules": [
@@ -52,6 +58,12 @@
                 ],
                 "action": "predefined",
                 "rcode": "REFUSED"
+            },
+            {
+                "rule_set": [
+                    "geosite-category-ads-all"
+                ],
+                "server": "fakeip"
             },
             {
                 "clash_mode": "Global",
@@ -88,6 +100,7 @@
         ],
         "final": "cloudflare",
         "strategy": "prefer_ipv4",
+        "client_subnet": "111.222.0.0",
         "disable_cache": false,
         "disable_expire": false,
         "independent_cache": true
