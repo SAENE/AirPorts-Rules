@@ -12,8 +12,35 @@ external-controller: {{ default(global.clash.external_controller, "127.0.0.1:909
 dns:
   enable: true
   listen: :1053
+  cache-algorithm: arc
+{% if default(request.clash.fakeip, "") == "true" %}
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-range6: fdfe:dcba:9876::1/64
+  fake-ip-filter-mode: rule # blacklist
+  fake-ip-filter:
+    - GEOSITE,bilibili,fake-ip
+    - GEOSITE,tiktok,fake-ip
+    - GEOSITE,CN,real-ip
+    - GEOSITE,geolocation-cn,real-ip
+    - GEOSITE,private,real-ip
+    - GEOSITE,fakeip-filter,real-ip
+    - GEOSITE,category-ads-all,fake-ip
+    - MATCH,fake-ip
+  fake-ip-ttl: 1
+{% else %}
 {% if default(request.clash.redir, "") == "true" %}
   enhanced-mode: redir-host
+{% else %}
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-range6: fdfe:dcba:9876::1/64
+  fake-ip-filter-mode: rule # whitelist
+  fake-ip-filter:
+    - GEOSITE,geolocation-cn,fake-ip
+    - MATCH,real-ip
+  fake-ip-ttl: 1
+{% endif %}
 {% endif %}
 {% if default(request.clash.meta, "") == "true" %}
   ipv6: true
@@ -28,11 +55,13 @@ dns:
   - https://101.198.198.198/dns-query
   - https://doh.pub/dns-query
   nameserver-policy:
-    "geosite:cn,private":
+    "geosite:cn":
     - https://223.5.5.5/dns-query
     - https://223.6.6.6/dns-query
     - https://101.198.198.198/dns-query
     - https://doh.pub/dns-query
+    "geosite:private":
+    - system
   default-nameserver:
   - https://223.5.5.5/dns-query
   - https://101.198.198.198/dns-query
@@ -92,21 +121,15 @@ sniffer:
 {% else %}
   ipv6: true
   nameserver:
+  - https://223.5.5.5/dns-query
+  - https://101.198.198.198/dns-query
+  - https://120.53.53.53/dns-query
   - https://doh.pub/dns-query
-  - https://dns.alidns.com/dns-query
-  - tls://1.12.12.12:853
-  - https://doh.pub/dns-query
-  - https://doh.360.cn/dns-query
   fallback:
-  - 'https://dns.cloudflare.com/dns-query'
   - 'https://1.1.1.1/dns-query'
-  - 'tls://1.1.1.1:853'
-  - 'tls://8.8.8.8:853'
-  - 'https://8.8.8.8/dns-quer'
-  - 'https://unfiltered.adguard-dns.com/dns-query'
-  - 'https://dns.quad9.net/dns-query'
-  - 'tls://185.222.222.222:853'
-  - 'tls://77.88.8.8:853'
+  - 'https://8.8.8.8/dns-query'
+  - 'https://dns.cloudflare.com/dns-query'
+  - 'https://dns.google/dns-query'
   fallback-filter:
     geoip: false
     ipcidr:
