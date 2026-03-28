@@ -7,6 +7,10 @@
     "dns": {
         "servers": [
             {
+                "tag": "local",
+                "type": "local"
+            },
+            {
                 "tag": "txdns",
                 "type": "udp",
                 "server": "119.29.29.29",
@@ -66,6 +70,12 @@
                 "server": "fakeip"
             },
             {
+                "rule_set": [
+                    "geosite-private"
+                ],
+                "server": "local"
+            },
+            {
                 "clash_mode": "Global",
                 "server": "google"
             },
@@ -122,7 +132,6 @@
             ],
             "auto_route": true,
             "strict_route": true,
-            "sniff": true,
             "stack": "mixed"
         }
     ],
@@ -436,7 +445,8 @@
                 "rule_set": [
                     "geosite-geolocation-cn",
                     "geosite-cn",
-                    "geoip-cn"
+                    "geoip-cn",
+                    "geosite-private"
                 ],
                 "outbound": "🚀直接连接"
             },
@@ -458,6 +468,12 @@
                 ],
                 "action": "route",
                 "outbound": "🚀直接连接"
+            },
+            {
+                "rule_set": [
+                    "geosite-test-ipv6"
+                ],
+                "outbound": "⚓️其他流量"
             },
             {
                 "rule_set": [
@@ -499,6 +515,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-private",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
                 "update_interval": "1d"
             },
             {
@@ -742,6 +765,12 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-game-platforms-download.srs"
+            },
+            {
+                "tag": "geosite-test-ipv6",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/test-ipv6.srs"
             }
         ],
         "final": "⚓️其他流量",
