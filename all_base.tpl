@@ -62,6 +62,11 @@ dns:
     - https://doh.pub/dns-query
     "geosite:private":
     - system
+  direct-nameserver:
+  - https://223.5.5.5/dns-query
+  - https://223.6.6.6/dns-query
+  - https://101.198.198.198/dns-query
+  - https://doh.pub/dns-query
   default-nameserver:
   - https://223.5.5.5/dns-query
   - https://101.198.198.198/dns-query
