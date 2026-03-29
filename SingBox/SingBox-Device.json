@@ -471,6 +471,7 @@
             },
             {
                 "rule_set": [
+                    "geosite-ookla-speedtest",
                     "geosite-test-ipv6"
                 ],
                 "outbound": "⚓️其他流量"
@@ -767,6 +768,12 @@
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-game-platforms-download.srs"
             },
             {
+                "tag": "geosite-ookla-speedtest",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/ookla-speedtest.srs"
+            },
+            {
                 "tag": "geosite-test-ipv6",
                 "type": "remote",
                 "format": "binary",
@@ -780,6 +787,12 @@
             "server": "alidns",
             "rewrite_tll": 60
         }
+    },
+    "ntp": {
+        "enabled": true,
+        "server": "ntp.aliyun.com",
+        "server_port": 123,
+        "interval": "30m"
     },
     "experimental": {
         "cache_file": {
