@@ -25,7 +25,7 @@ dns:
     - GEOSITE,CN,real-ip
     - GEOSITE,geolocation-cn,real-ip
     - GEOSITE,private,real-ip
-    - GEOSITE,fakeip-filter,real-ip
+    - GEOSITE,connectivity-check,real-ip
     - MATCH,fake-ip
   fake-ip-ttl: 1
 {% else %}
