@@ -65,12 +65,6 @@
             },
             {
                 "rule_set": [
-                    "geosite-category-ads-all"
-                ],
-                "server": "fakeip"
-            },
-            {
-                "rule_set": [
                     "geosite-private"
                 ],
                 "server": "local"
@@ -321,13 +315,6 @@
                 "outbound": "GLOBAL"
             },
             {
-                "rule_set": [
-                    "geosite-category-ads-all"
-                ],
-                "action": "reject",
-                "method": "default"
-            },
-            {
                 "domain": [
                     "clash.razord.top",
                     "yacd.metacubex.one",
@@ -523,13 +510,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/private.srs",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geosite-category-ads-all",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ads-all.srs",
                 "update_interval": "1d"
             },
             {

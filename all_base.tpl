@@ -19,7 +19,6 @@ dns:
   fake-ip-range6: fdfe:dcba:9876::1/64
   fake-ip-filter-mode: rule # blacklist
   fake-ip-filter:
-    - GEOSITE,category-ads-all,fake-ip
     - GEOSITE,bilibili,fake-ip
     - GEOSITE,tiktok,fake-ip
     - GEOSITE,CN,real-ip
@@ -37,7 +36,6 @@ dns:
   fake-ip-range6: fdfe:dcba:9876::1/64
   fake-ip-filter-mode: rule # whitelist
   fake-ip-filter:
-    - GEOSITE,category-ads-all,fake-ip
     - MATCH,real-ip
   fake-ip-ttl: 1
 {% endif %}
