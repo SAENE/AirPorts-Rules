@@ -19,12 +19,13 @@ dns:
   fake-ip-range6: fdfe:dcba:9876::1/64
   fake-ip-filter-mode: rule # blacklist
   fake-ip-filter:
+    - RULE-SET,fake-ip-filter,real-ip
+    - GEOSITE,connectivity-check,real-ip
     - GEOSITE,bilibili,fake-ip
     - GEOSITE,tiktok,fake-ip
     - GEOSITE,CN,real-ip
     - GEOSITE,geolocation-cn,real-ip
     - GEOSITE,private,real-ip
-    - GEOSITE,connectivity-check,real-ip
     - MATCH,fake-ip
   fake-ip-ttl: 1
 {% else %}
@@ -44,10 +45,16 @@ dns:
   ipv6: true
   prefer-h3: true
   respect-rules: true
+  direct-nameserver-follow-policy: true
   nameserver:
   - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
   - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
   proxy-server-nameserver:
+  - https://223.5.5.5/dns-query
+  - https://223.6.6.6/dns-query
+  - https://101.198.198.198/dns-query
+  - https://doh.pub/dns-query
+  direct-nameserver:
   - https://223.5.5.5/dns-query
   - https://223.6.6.6/dns-query
   - https://101.198.198.198/dns-query
@@ -67,6 +74,12 @@ dns:
 # external-ui: ./ui/
 # external-ui-name: xd
 # external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+ntp:
+  enable: true
+  write-to-system: false
+  server: ntp.aliyun.com
+  port: 123
+  interval: 30
 tcp-concurrent: true
 unified-delay: true
 find-process-mode: strict
@@ -85,6 +98,16 @@ geox-url:
   mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
   geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
   geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+{% if default(request.clash.fakeip, "") == "true" %}
+rule-providers:
+  fake-ip-filter:
+    type: http
+    behavior: domain
+    format: text
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
+    path: ./ruleset/fake_ip_filter.list
+{% endif %}
 sniffer:
   enable: true
   force-dns-mapping: true
