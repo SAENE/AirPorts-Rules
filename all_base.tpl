@@ -10,76 +10,85 @@ log-level: {{ default(global.clash.log_level, "info") }}
 external-controller: {{ default(global.clash.external_controller, "127.0.0.1:9090") }}
 {% if default(request.clash.doh, "") == "true" %}
 dns:
-  enable: true
-  listen: :1053
-  cache-algorithm: arc
+    enable: true
+    listen: :1053
+    cache-algorithm: arc
 {% if default(request.clash.fakeip, "") == "true" %}
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  fake-ip-range6: fdfe:dcba:9876::1/64
-  fake-ip-filter-mode: rule # blacklist
-  fake-ip-filter:
-    - RULE-SET,fake-ip-filter,real-ip
-    - GEOSITE,connectivity-check,real-ip
-    - GEOSITE,bilibili,fake-ip
-    - GEOSITE,tiktok,fake-ip
-    - GEOSITE,CN,real-ip
-    - GEOSITE,geolocation-cn,real-ip
-    - GEOSITE,private,real-ip
-    - MATCH,fake-ip
-  fake-ip-ttl: 1
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
+    fake-ip-range6: fdfe:dcba:9876::1/64
+    fake-ip-filter-mode: rule # blacklist
+    fake-ip-filter:
+        - RULE-SET,fake-ip-filter,real-ip
+        - GEOSITE,connectivity-check,real-ip
+        - GEOSITE,bilibili,fake-ip
+        - GEOSITE,tiktok,fake-ip
+        - GEOSITE,CN,real-ip
+        - GEOSITE,geolocation-cn,real-ip
+        - GEOSITE,private,real-ip
+        - MATCH,fake-ip
+    fake-ip-ttl: 1
 {% else %}
 {% if default(request.clash.redir, "") == "true" %}
-  enhanced-mode: redir-host
+    enhanced-mode: redir-host
 {% else %}
-  enhanced-mode: fake-ip
-  fake-ip-range: 198.18.0.1/16
-  fake-ip-range6: fdfe:dcba:9876::1/64
-  fake-ip-filter-mode: rule # whitelist
-  fake-ip-filter:
-    - MATCH,real-ip
-  fake-ip-ttl: 1
+    enhanced-mode: fake-ip
+    fake-ip-range: 198.18.0.1/16
+    fake-ip-range6: fdfe:dcba:9876::1/64
+    fake-ip-filter-mode: rule # whitelist
+    fake-ip-filter:
+        - MATCH,real-ip
+    fake-ip-ttl: 1
 {% endif %}
 {% endif %}
 {% if default(request.clash.meta, "") == "true" %}
-  ipv6: true
-  prefer-h3: true
-  respect-rules: true
-  direct-nameserver-follow-policy: true
-  nameserver:
-  - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
-  - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
-  proxy-server-nameserver:
-  - https://223.5.5.5/dns-query
-  - https://223.6.6.6/dns-query
-  - https://101.198.198.198/dns-query
-  - https://doh.pub/dns-query
-  direct-nameserver:
-  - https://223.5.5.5/dns-query
-  - https://223.6.6.6/dns-query
-  - https://101.198.198.198/dns-query
-  - https://doh.pub/dns-query
-  nameserver-policy:
-    "geosite:cn,geolocation-cn":
-    - https://223.5.5.5/dns-query
-    - https://223.6.6.6/dns-query
-    - https://101.198.198.198/dns-query
-    - https://doh.pub/dns-query
-    "geosite:private":
-    - system
-  default-nameserver:
-  - https://223.5.5.5/dns-query
-  - https://101.198.198.198/dns-query
-  - https://120.53.53.53/dns-query
+    ipv6: true
+    prefer-h3: true
+    respect-rules: true
+    direct-nameserver-follow-policy: true
+    nameserver:
+        - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
+        - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
+        - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
+        - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
+    proxy-server-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://101.198.198.198/dns-query
+        - https://doh.pub/dns-query
+        - https://dns.alidns.com/dns-query
+        - https://doh.360.cn/dns-query
+    direct-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://101.198.198.198/dns-query
+        - https://doh.pub/dns-query
+        - https://dns.alidns.com/dns-query
+        - https://doh.360.cn/dns-query
+    nameserver-policy:
+        "geosite:cn,geolocation-cn":
+            - https://223.5.5.5/dns-query
+            - https://223.6.6.6/dns-query
+            - https://101.198.198.198/dns-query
+            - https://doh.pub/dns-query
+            - https://dns.alidns.com/dns-query
+            - https://doh.360.cn/dns-query
+        "geosite:private":
+            - system
+    default-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://101.198.198.198/dns-query
+        - https://120.53.53.53/dns-query
 # external-ui: ./ui/
 # external-ui-name: xd
 # external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 ntp:
-  enable: true
-  write-to-system: false
-  server: ntp.aliyun.com
-  port: 123
-  interval: 30
+    enable: true
+    write-to-system: false
+    server: ntp.aliyun.com
+    port: 123
+    interval: 30
 tcp-concurrent: true
 unified-delay: true
 find-process-mode: strict
@@ -95,75 +104,76 @@ geodata-loader: standard
 # geosite: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
 # asn: https://testingcf.jsdelivr.net/gh/xishang0128/geoip@release/GeoLite2-ASN.mmdb
 geox-url:
-  mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
-  geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
-  geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+    mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
+    geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
 {% if default(request.clash.fakeip, "") == "true" %}
 rule-providers:
-  fake-ip-filter:
-    type: http
-    behavior: domain
-    format: text
-    interval: 86400
-    url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
-    path: ./ruleset/fake_ip_filter.list
+    fake-ip-filter:
+        type: http
+        behavior: domain
+        format: text
+        interval: 86400
+        url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
+        path: ./ruleset/fake_ip_filter.list
 {% endif %}
 sniffer:
-  enable: true
-  force-dns-mapping: true
-  parse-pure-ip: true
-  force-domain:
-    - '+.google.com'
-    - '+.facebook.com'
-    - '+.youtube.com'
-    - '+.google.cn'
-    - '+.google.cn'
-    - '+.googleapis.cn'
-    - '+.hotels.cn'
-    - '+.keso.cn'
-  skip-domain:
-  - "+.apple.com"
-  - Mijia Cloud
-  - dlg.io.mi.com
-  sniff:
-    TLS:
-      ports:
-      - 443
-      - 8443
-    HTTP:
-      ports:
-      - 80
-      - 8080-8880
-      override-destination: true
-    QUIC:
-      ports:
-      - 443
-      - 8443
+    enable: true
+    force-dns-mapping: true
+    parse-pure-ip: true
+    override-destination: false
+    force-domain:
+        - '+.google.com'
+        - '+.facebook.com'
+        - '+.youtube.com'
+        - '+.google.cn'
+        - '+.google.cn'
+        - '+.googleapis.cn'
+        - '+.hotels.cn'
+        - '+.keso.cn'
+    skip-domain:
+        - "+.apple.com"
+        - Mijia Cloud
+        - dlg.io.mi.com
+    sniff:
+        TLS:
+            ports:
+                - 443
+                - 8443
+        HTTP:
+            ports:
+                - 80
+                - 8080-8880
+            override-destination: true
+        QUIC:
+            ports:
+                - 443
+                - 8443
 {% else %}
-  ipv6: true
-  nameserver:
-  - https://223.5.5.5/dns-query
-  - https://101.198.198.198/dns-query
-  - https://120.53.53.53/dns-query
-  - https://doh.pub/dns-query
-  fallback:
-  - 'https://1.1.1.1/dns-query'
-  - 'https://8.8.8.8/dns-query'
-  - 'https://dns.cloudflare.com/dns-query'
-  - 'https://dns.google/dns-query'
-  fallback-filter:
-    geoip: false
-    ipcidr:
-      - 240.0.0.0/4
-    domain:
-      - '+.google.com'
-      - '+.facebook.com'
-      - '+.youtube.com'
-      - '+.google.cn'
-      - '+.google.cn'
-      - '+.googleapis.cn'
-      - '+.hotels.cn'
-      - '+.keso.cn'
+    ipv6: true
+    nameserver:
+        - https://223.5.5.5/dns-query
+        - https://101.198.198.198/dns-query
+        - https://120.53.53.53/dns-query
+        - https://doh.pub/dns-query
+    fallback:
+        - 'https://1.1.1.1/dns-query'
+        - 'https://8.8.8.8/dns-query'
+        - 'https://dns.cloudflare.com/dns-query'
+        - 'https://dns.google/dns-query'
+    fallback-filter:
+        geoip: false
+        ipcidr:
+            - 240.0.0.0/4
+        domain:
+            - '+.google.com'
+            - '+.facebook.com'
+            - '+.youtube.com'
+            - '+.google.cn'
+            - '+.google.cn'
+            - '+.googleapis.cn'
+            - '+.hotels.cn'
+            - '+.keso.cn'
 {% endif %}
 {% endif %}
 {% if local.clash.new_field_name == "true" %}
