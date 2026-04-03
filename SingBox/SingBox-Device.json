@@ -348,19 +348,19 @@
             },
             {
                 "rule_set": [
-                    "geosite-openai",
-                    "geosite-gemini",
-                    "geosite-ai-!cn"
-                ],
-                "outbound": "🇦🇮AI"
-            },
-            {
-                "rule_set": [
                     "geoip-google",
+                    "geosite-gemini",
                     "geosite-google-cn",
                     "geosite-google"
                 ],
                 "outbound": "🔎Google"
+            },
+            {
+                "rule_set": [
+                    "geosite-openai",
+                    "geosite-ai-!cn"
+                ],
+                "outbound": "🇦🇮AI"
             },
             {
                 "rule_set": [
