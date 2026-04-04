@@ -781,9 +781,20 @@
         },
         "clash_api": {
             "external_controller": "127.0.0.1:9090",
-            "external_ui": "dashboard",
-            "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui": "./ui",
+            "access_control_allow_origin": [
+                "http://127.0.0.1",
+                "https://yacd.haishan.me",
+                "https://clash.razord.top",
+                "https://yacd.metacubex.one",
+                "https://d.metacubex.one"
+            ],
+            "access_control_allow_private_network": true,
+            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
             "secret": "",
+            "store_mode": true,
+            "store_selected": true,
+            "store_fakeip": false,
             "default_mode": "Rule"
         }
     }

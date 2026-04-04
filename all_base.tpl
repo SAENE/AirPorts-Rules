@@ -80,9 +80,14 @@ dns:
         - https://223.6.6.6/dns-query
         - https://101.198.198.198/dns-query
         - https://120.53.53.53/dns-query
-# external-ui: ./ui/
+external-ui: ./ui
+ipv6: true
 # external-ui-name: xd
-# external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-controller-cors:
+  allow-origins:
+    - '*'
+  allow-private-network: true
 ntp:
     enable: true
     write-to-system: false
@@ -98,7 +103,7 @@ keep-alive-idle: 600
 geo-auto-update: true
 geo-update-interval: 24
 geodata-mode: true
-geodata-loader: standard
+geodata-loader: memconservative
 # mmdb: https://testingcf.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/Country.mmdb
 # geoip: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
 # geosite: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
