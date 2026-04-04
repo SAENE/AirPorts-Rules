@@ -149,6 +149,9 @@ sniffer:
             ports:
                 - 443
                 - 8443
+profile:
+  store-selected: true
+  store-fake-ip: false
 {% else %}
     ipv6: true
     nameserver:
