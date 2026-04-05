@@ -41,8 +41,8 @@ dns:
     ipv6: true
     prefer-h3: true
     respect-rules: true
-    direct-nameserver-follow-policy: true
 {% if default(request.clash.prefercn, "") == "true" %}
+    direct-nameserver-follow-policy: false
     nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
@@ -50,6 +50,12 @@ dns:
         - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     proxy-server-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://dns.alidns.com/dns-query
+        - https://doh.pub/dns-query
+        - https://doh.360.cn/dns-query
+    direct-nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
         - https://dns.alidns.com/dns-query
@@ -69,6 +75,7 @@ dns:
         - https://101.198.198.198/dns-query
         - https://120.53.53.53/dns-query
 {% else %}
+    direct-nameserver-follow-policy: true
     nameserver:
         - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
         - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
