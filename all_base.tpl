@@ -13,12 +13,12 @@ dns:
     enable: true
     listen: :1053
     cache-algorithm: arc
-{% if default(request.clash.fakeip, "") == "true" %}
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
     fake-ip-range6: fdfe:dcba:9876::1/64
-    fake-ip-filter-mode: rule # blacklist
+    fake-ip-filter-mode: rule # whitelist
     fake-ip-filter:
+{% if default(request.clash.fakeip, "") == "true" %}
         - RULE-SET,fake-ip-filter,real-ip
         - GEOSITE,connectivity-check,real-ip
         - GEOSITE,bilibili,fake-ip
@@ -27,35 +27,17 @@ dns:
         - GEOSITE,geolocation-cn,real-ip
         - GEOSITE,private,real-ip
         - MATCH,fake-ip
-    fake-ip-ttl: 1
 {% else %}
-    enhanced-mode: fake-ip
-    fake-ip-range: 198.18.0.1/16
-    fake-ip-range6: fdfe:dcba:9876::1/64
-    fake-ip-filter-mode: rule # whitelist
-    fake-ip-filter:
         - MATCH,real-ip
-    fake-ip-ttl: 1
 {% endif %}
+    fake-ip-ttl: 1
 {% if default(request.clash.meta, "") == "true" %}
     ipv6: true
     prefer-h3: true
     respect-rules: true
+    direct-nameserver-follow-policy: true
 {% if default(request.clash.prefercn, "") == "true" %}
-    direct-nameserver-follow-policy: false
     nameserver:
-        - https://223.5.5.5/dns-query
-        - https://223.6.6.6/dns-query
-        - https://dns.alidns.com/dns-query
-        - https://doh.pub/dns-query
-        - https://doh.360.cn/dns-query
-    proxy-server-nameserver:
-        - https://223.5.5.5/dns-query
-        - https://223.6.6.6/dns-query
-        - https://dns.alidns.com/dns-query
-        - https://doh.pub/dns-query
-        - https://doh.360.cn/dns-query
-    direct-nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
         - https://dns.alidns.com/dns-query
@@ -69,13 +51,7 @@ dns:
             - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
         "geosite:private":
             - system
-    default-nameserver:
-        - https://223.5.5.5/dns-query
-        - https://223.6.6.6/dns-query
-        - https://101.198.198.198/dns-query
-        - https://120.53.53.53/dns-query
 {% else %}
-    direct-nameserver-follow-policy: true
     nameserver:
         - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
         - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
@@ -83,12 +59,6 @@ dns:
         - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
         - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
         - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
-    proxy-server-nameserver:
-        - https://223.5.5.5/dns-query
-        - https://223.6.6.6/dns-query
-        - https://dns.alidns.com/dns-query
-        - https://doh.pub/dns-query
-        - https://doh.360.cn/dns-query
     direct-nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
@@ -104,12 +74,18 @@ dns:
             - https://doh.360.cn/dns-query
         "geosite:private":
             - system
+{% endif %}
+    proxy-server-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://dns.alidns.com/dns-query
+        - https://doh.pub/dns-query
+        - https://doh.360.cn/dns-query
     default-nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
         - https://101.198.198.198/dns-query
         - https://120.53.53.53/dns-query
-{% endif %}
 external-ui: ./ui
 ipv6: true
 # external-ui-name: xd
