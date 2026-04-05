@@ -46,11 +46,14 @@ dns:
         - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     nameserver-policy:
+{% if default(request.clash.fakeip, "") == "false" %}
         "geosite:gfw,geolocation-!cn,google-cn":
             - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
             - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
             - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
             - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
+# clash.fakeip END
+{% endif %}
         "geosite:private":
             - system
 # clash.prefercn else
@@ -90,48 +93,6 @@ dns:
         - https://223.6.6.6/dns-query
         - https://101.198.198.198/dns-query
         - https://120.53.53.53/dns-query
-external-ui: ./ui
-ipv6: true
-# external-ui-name: xd
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
-external-controller-cors:
-    allow-origins:
-        - '*'
-    allow-private-network: true
-ntp:
-    enable: true
-    write-to-system: false
-    server: ntp.aliyun.com
-    port: 123
-    interval: 30
-tcp-concurrent: true
-unified-delay: true
-find-process-mode: strict
-global-client-fingerprint: random
-keep-alive-interval: 15
-keep-alive-idle: 15
-geo-auto-update: true
-geo-update-interval: 24
-geodata-mode: true
-geodata-loader: memconservative
-# mmdb: https://testingcf.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/Country.mmdb
-# geoip: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
-# geosite: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
-# asn: https://testingcf.jsdelivr.net/gh/xishang0128/geoip@release/GeoLite2-ASN.mmdb
-geox-url:
-    mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
-    geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
-    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
-        {% if default(request.clash.fakeip, "") == "true" %}
-rule-providers:
-    fake-ip-filter:
-        type: http
-        behavior: domain
-        format: text
-        interval: 86400
-        url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
-        path: ./ruleset/fake_ip_filter.list
-        {% endif %}
 sniffer:
     enable: true
     force-dns-mapping: true
@@ -164,10 +125,52 @@ sniffer:
             ports:
                 - 443
                 - 8443
+ipv6: true
+external-ui: ./ui
+# external-ui-name: xd
+external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-controller-cors:
+    allow-origins:
+        - '*'
+    allow-private-network: true
+tcp-concurrent: true
+unified-delay: true
+find-process-mode: strict
+global-client-fingerprint: random
+keep-alive-interval: 15
+keep-alive-idle: 15
+geo-auto-update: true
+geo-update-interval: 24
+geodata-mode: true
+geodata-loader: memconservative
+# mmdb: https://testingcf.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/Country.mmdb
+# geoip: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat
+# geosite: https://testingcf.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat
+# asn: https://testingcf.jsdelivr.net/gh/xishang0128/geoip@release/GeoLite2-ASN.mmdb
+geox-url:
+    mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
+    geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
+    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+{% if default(request.clash.fakeip, "") == "true" %}
+rule-providers:
+    fake-ip-filter:
+        type: http
+        behavior: domain
+        format: text
+        interval: 86400
+        url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
+        path: ./ruleset/fake_ip_filter.list
+# clash.fakeip END
+{% endif %}
 profile:
     store-selected: true
-    store-fake-ip: false
-# clash.meta else
+    store-fake-ip: true
+ntp:
+    enable: true
+    write-to-system: false
+    server: ntp.aliyun.com
+    port: 123
+    interval: 30
 {% else %}
     nameserver:
         - https://223.5.5.5/dns-query
@@ -204,9 +207,11 @@ rules: ~
 Proxy: ~
 Proxy Group: ~
 Rule: ~
+# clash.clash.new_field_name END
+{% endif %}
+# clash END
 {% endif %}
 
-{% endif %}
 {% if request.target == "surge" %}
 
 [General]
