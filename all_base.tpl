@@ -29,9 +29,6 @@ dns:
         - MATCH,fake-ip
     fake-ip-ttl: 1
 {% else %}
-{% if default(request.clash.redir, "") == "true" %}
-    enhanced-mode: redir-host
-{% else %}
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
     fake-ip-range6: fdfe:dcba:9876::1/64
@@ -40,38 +37,63 @@ dns:
         - MATCH,real-ip
     fake-ip-ttl: 1
 {% endif %}
-{% endif %}
 {% if default(request.clash.meta, "") == "true" %}
     ipv6: true
     prefer-h3: true
     respect-rules: true
     direct-nameserver-follow-policy: true
+{% if default(request.clash.prefercn, "") == "true" %}
     nameserver:
-        - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
-        - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
-        - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
-        - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://dns.alidns.com/dns-query
+        - https://doh.pub/dns-query
+        - https://doh.360.cn/dns-query
     proxy-server-nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
-        - https://101.198.198.198/dns-query
-        - https://doh.pub/dns-query
         - https://dns.alidns.com/dns-query
+        - https://doh.pub/dns-query
+        - https://doh.360.cn/dns-query
+    nameserver-policy:
+        "geosite:gfw,geolocation-!cn,google-cn":
+            - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
+            - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
+            - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
+            - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
+        "geosite:private":
+            - system
+    default-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://101.198.198.198/dns-query
+        - https://120.53.53.53/dns-query
+{% else %}
+    nameserver:
+        - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
+        - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
+        - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
+        - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
+        - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
+        - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
+    proxy-server-nameserver:
+        - https://223.5.5.5/dns-query
+        - https://223.6.6.6/dns-query
+        - https://dns.alidns.com/dns-query
+        - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     direct-nameserver:
         - https://223.5.5.5/dns-query
         - https://223.6.6.6/dns-query
-        - https://101.198.198.198/dns-query
-        - https://doh.pub/dns-query
         - https://dns.alidns.com/dns-query
+        - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     nameserver-policy:
         "geosite:cn,geolocation-cn":
             - https://223.5.5.5/dns-query
             - https://223.6.6.6/dns-query
-            - https://101.198.198.198/dns-query
-            - https://doh.pub/dns-query
             - https://dns.alidns.com/dns-query
+            - https://doh.pub/dns-query
             - https://doh.360.cn/dns-query
         "geosite:private":
             - system
@@ -80,6 +102,7 @@ dns:
         - https://223.6.6.6/dns-query
         - https://101.198.198.198/dns-query
         - https://120.53.53.53/dns-query
+{% endif %}
 external-ui: ./ui
 ipv6: true
 # external-ui-name: xd
@@ -99,7 +122,7 @@ unified-delay: true
 find-process-mode: strict
 global-client-fingerprint: random
 keep-alive-interval: 15
-keep-alive-idle: 600
+keep-alive-idle: 15
 geo-auto-update: true
 geo-update-interval: 24
 geodata-mode: true
