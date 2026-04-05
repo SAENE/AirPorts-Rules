@@ -12,9 +12,10 @@
             },
             {
                 "tag": "txdns",
-                "type": "udp",
-                "server": "119.29.29.29",
-                "server_port": 53,
+                "type": "https",
+                "server": "doh.pub",
+                "server_port": 443,
+                "domain_resolver": "360dns",
                 "detour": "🚀直接连接"
             },
             {
@@ -75,7 +76,7 @@
             },
             {
                 "clash_mode": "Direct",
-                "server": "360dns"
+                "server": "txdns"
             },
             {
                 "rule_set": [
