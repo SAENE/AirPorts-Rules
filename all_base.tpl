@@ -12,6 +12,8 @@ external-controller: {{ default(global.clash.external_controller, "127.0.0.1:909
 dns:
     enable: true
     listen: :1053
+    ipv6: true
+{% if default(request.clash.meta, "") == "true" %}
     cache-algorithm: arc
     enhanced-mode: fake-ip
     fake-ip-range: 198.18.0.1/16
@@ -27,12 +29,12 @@ dns:
         - GEOSITE,geolocation-cn,real-ip
         - GEOSITE,private,real-ip
         - MATCH,fake-ip
+# clash.fakeip else
 {% else %}
         - MATCH,real-ip
+# clash.fakeip END
 {% endif %}
     fake-ip-ttl: 1
-{% if default(request.clash.meta, "") == "true" %}
-    ipv6: true
     prefer-h3: true
     respect-rules: true
     direct-nameserver-follow-policy: true
@@ -51,6 +53,7 @@ dns:
             - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
         "geosite:private":
             - system
+# clash.prefercn else
 {% else %}
     nameserver:
         - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
@@ -74,6 +77,7 @@ dns:
             - https://doh.360.cn/dns-query
         "geosite:private":
             - system
+# clash.prefercn END
 {% endif %}
     proxy-server-nameserver:
         - https://223.5.5.5/dns-query
@@ -118,7 +122,7 @@ geox-url:
     mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.metadb
     geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat
     geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
-{% if default(request.clash.fakeip, "") == "true" %}
+        {% if default(request.clash.fakeip, "") == "true" %}
 rule-providers:
     fake-ip-filter:
         type: http
@@ -127,7 +131,7 @@ rule-providers:
         interval: 86400
         url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
         path: ./ruleset/fake_ip_filter.list
-{% endif %}
+        {% endif %}
 sniffer:
     enable: true
     force-dns-mapping: true
@@ -163,8 +167,8 @@ sniffer:
 profile:
   store-selected: true
   store-fake-ip: false
+# clash.meta else
 {% else %}
-    ipv6: true
     nameserver:
         - https://223.5.5.5/dns-query
         - https://101.198.198.198/dns-query
@@ -188,7 +192,9 @@ profile:
             - '+.googleapis.cn'
             - '+.hotels.cn'
             - '+.keso.cn'
+# clash.meta END
 {% endif %}
+# clash.doh END
 {% endif %}
 {% if local.clash.new_field_name == "true" %}
 proxies: ~
