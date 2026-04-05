@@ -95,9 +95,9 @@ ipv6: true
 # external-ui-name: xd
 external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
 external-controller-cors:
-  allow-origins:
-    - '*'
-  allow-private-network: true
+    allow-origins:
+        - '*'
+    allow-private-network: true
 ntp:
     enable: true
     write-to-system: false
@@ -165,8 +165,8 @@ sniffer:
                 - 443
                 - 8443
 profile:
-  store-selected: true
-  store-fake-ip: false
+    store-selected: true
+    store-fake-ip: false
 # clash.meta else
 {% else %}
     nameserver:
