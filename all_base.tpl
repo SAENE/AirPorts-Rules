@@ -47,12 +47,6 @@ dns:
         - https://doh.360.cn/dns-query
     nameserver-policy:
 {% if default(request.clash.fakeip, "") == "false" %}
-        "geosite:cn,geolocation-cn,category-game-platforms-download,category-games,microsoft,apple,category-ntp,category-ddns": 
-            - https://223.5.5.5/dns-query
-            - https://223.6.6.6/dns-query
-            - https://dns.alidns.com/dns-query
-            - https://doh.pub/dns-query
-            - https://doh.360.cn/dns-query
         "geosite:gfw,geolocation-!cn":
             - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
             - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
