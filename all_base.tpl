@@ -53,7 +53,7 @@ dns:
             - https://dns.alidns.com/dns-query
             - https://doh.pub/dns-query
             - https://doh.360.cn/dns-query
-        "geosite:gfw,geolocation-!cn,google-cn":
+        "geosite:gfw,geolocation-!cn":
             - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
             - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
             - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"

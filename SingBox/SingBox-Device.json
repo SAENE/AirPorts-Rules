@@ -361,7 +361,6 @@
                 "rule_set": [
                     "geoip-google",
                     "geosite-gemini",
-                    "geosite-google-cn",
                     "geosite-google"
                 ],
                 "outbound": "🔎Google"
@@ -631,13 +630,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google.srs",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geosite-google-cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google-cn.srs",
                 "update_interval": "1d"
             },
             {
