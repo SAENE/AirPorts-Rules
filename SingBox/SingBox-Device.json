@@ -375,7 +375,6 @@
             },
             {
                 "rule_set": [
-                    "geoip-google",
                     "geosite-gemini",
                     "geosite-google"
                 ],
@@ -390,7 +389,6 @@
             },
             {
                 "rule_set": [
-                    "geoip-telegram",
                     "geosite-telegram"
                 ],
                 "outbound": "✈️Telegram"
@@ -405,7 +403,6 @@
             },
             {
                 "rule_set": [
-                    "geoip-netflix",
                     "geosite-netflix",
                     "geosite-bahamut",
                     "geosite-spotify",
@@ -420,7 +417,6 @@
             },
             {
                 "rule_set": [
-                    "geoip-apple",
                     "geosite-apple"
                 ],
                 "outbound": "🍎苹果服务"
@@ -640,26 +636,10 @@
                 "update_interval": "1d"
             },
             {
-                "tag": "geoip-telegram",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
                 "tag": "geosite-telegram",
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-telegram.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geoip-google",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
@@ -752,14 +732,6 @@
                 "update_interval": "1d"
             },
             {
-                "tag": "geoip-netflix",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
                 "tag": "geosite-netflix",
                 "type": "remote",
                 "format": "binary",
@@ -772,14 +744,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-disney.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geoip-apple",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/apple.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
