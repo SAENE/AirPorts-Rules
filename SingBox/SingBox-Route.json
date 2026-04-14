@@ -7,10 +7,15 @@
     "dns": {
         "servers": [
             {
+                "tag": "local",
+                "type": "local"
+            },
+            {
                 "tag": "txdns",
-                "type": "udp",
-                "server": "119.29.29.29",
-                "server_port": 53,
+                "type": "https",
+                "server": "doh.pub",
+                "server_port": 443,
+                "domain_resolver": "360dns",
                 "detour": "🚀直接连接"
             },
             {
@@ -33,7 +38,7 @@
                 "server": "cloudflare-dns.com",
                 "server_port": 443,
                 "domain_resolver": "360dns",
-                "detour": "🔰国外流量"
+                "detour": "🌐DNS&配置规则"
             },
             {
                 "tag": "google",
@@ -41,7 +46,13 @@
                 "server": "dns.google",
                 "server_port": 443,
                 "domain_resolver": "alidns",
-                "detour": "🔰国外流量"
+                "detour": "🌐DNS&配置规则"
+            },
+            {
+                "tag": "fakeip",
+                "type": "fakeip",
+                "inet4_range": "198.18.0.0\/16",
+                "inet6_range": "fdfe:dcba:9876::1/64"
             }
         ],
         "rules": [
@@ -54,12 +65,18 @@
                 "rcode": "REFUSED"
             },
             {
+                "rule_set": [
+                    "geosite-private"
+                ],
+                "server": "local"
+            },
+            {
                 "clash_mode": "Global",
                 "server": "google"
             },
             {
                 "clash_mode": "Direct",
-                "server": "360dns"
+                "server": "txdns"
             },
             {
                 "rule_set": [
@@ -88,6 +105,7 @@
         ],
         "final": "cloudflare",
         "strategy": "prefer_ipv4",
+        "client_subnet": "111.222.0.0",
         "disable_cache": false,
         "disable_expire": false,
         "independent_cache": true
@@ -127,7 +145,6 @@
             ],
             "auto_route": true,
             "strict_route": true,
-            "sniff": true,
             "stack": "mixed"
         }
     ],
@@ -143,7 +160,8 @@
                 "♻️自动选择",
                 "{all}",
                 "🚀直接连接"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "urltest",
@@ -151,10 +169,23 @@
             "outbounds": [
                 "{all}"
             ],
-            "filter":[{"action":"exclude","keywords":["GoProxy|GoHome"]}],
-            "url": "https://www.gstatic.com/generate_204",
-            "interval": "5m",
-            "tolerance": 100
+            "filter":[{"action":"exclude","keywords":["[2-9].*倍|[2-9].*x|[1-9][0-9].*x|[1-9][0-9].*倍"]}],
+            "url": "https://cp.cloudflare.com/generate_204",
+            "interval": "3m",
+            "tolerance": 50,
+            "idle_timeout": "30m",
+            "interrupt_exist_connections": true
+        },
+        {
+            "type": "selector",
+            "tag": "🌐DNS&配置规则",
+            "outbounds": [
+                "🔰国外流量",
+                "♻️自动选择",
+                "🚀直接连接",
+                "{all}"
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -164,7 +195,8 @@
                 "🚀直接连接",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -173,7 +205,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -182,7 +215,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -191,7 +225,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -201,7 +236,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -211,7 +247,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -220,7 +257,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -230,7 +268,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -240,7 +279,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -250,7 +290,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -260,7 +301,8 @@
                 "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         },
         {
             "type": "selector",
@@ -275,17 +317,17 @@
             "outbounds": [
                 "Direct",
                 "{all}"
-            ]
+            ],
+            "interrupt_exist_connections": true
         }
     ],
     "route": {
         "rules": [
             {
                 "inbound": [
-                    "tun-in",
                     "redirect-in",
                     "tproxy-in",
-                    "dns-in",
+                    "tun-in",
                     "mixed-in"
                 ],
                 "action": "sniff",
@@ -300,13 +342,11 @@
                     },
                     {
                         "protocol": "dns"
+                    },
+                    {
+                        "inbound": "dns-in"
                     }
                 ],
-                "action": "hijack-dns"
-            },
-            {
-                "inbound": "dns-in",
-                "port": 7874,
                 "action": "hijack-dns"
             },
             {
@@ -323,13 +363,6 @@
                 "clash_mode": "Global",
                 "action": "route",
                 "outbound": "GLOBAL"
-            },
-            {
-                "rule_set": [
-                    "geosite-category-ads-all"
-                ],
-                "action": "reject",
-                "method": "default"
             },
             {
                 "domain": [
@@ -365,23 +398,20 @@
             },
             {
                 "rule_set": [
-                    "geosite-openai",
                     "geosite-gemini",
-                    "geosite-ai-!cn"
-                ],
-                "outbound": "🇦🇮AI"
-            },
-            {
-                "rule_set": [
-                    "geoip-google",
-                    "geosite-google-cn",
                     "geosite-google"
                 ],
                 "outbound": "🔎Google"
             },
             {
                 "rule_set": [
-                    "geoip-telegram",
+                    "geosite-openai",
+                    "geosite-ai-!cn"
+                ],
+                "outbound": "🇦🇮AI"
+            },
+            {
+                "rule_set": [
                     "geosite-telegram"
                 ],
                 "outbound": "✈️Telegram"
@@ -396,7 +426,6 @@
             },
             {
                 "rule_set": [
-                    "geoip-netflix",
                     "geosite-netflix",
                     "geosite-bahamut",
                     "geosite-spotify",
@@ -411,7 +440,6 @@
             },
             {
                 "rule_set": [
-                    "geoip-apple",
                     "geosite-apple"
                 ],
                 "outbound": "🍎苹果服务"
@@ -419,6 +447,10 @@
             {
                 "rule_set": "geosite-microsoft",
                 "outbound": "Ⓜ️微软服务"
+            },
+            {
+                "rule_set": "geosite-category-game-platforms-download@cn",
+                "outbound": "🚀直接连接"
             },
             {
                 "rule_set": "geosite-category-games-download",
@@ -430,15 +462,14 @@
                 "rules": [
                     {
                         "rule_set": [
-                            "geosite-category-games-download"
+                            "geosite-category-games-download",
+                            "geosite-category-game-platforms-download@cn"
                         ],
                         "invert": true
                     },
                     {
                         "rule_set": [
-                            "geosite-category-games",
-                            "geosite-xbox",
-                            "geosite-dmm"
+                            "geosite-category-games-!cn"
                         ]
                     }
                 ],
@@ -449,7 +480,8 @@
                 "rule_set": [
                     "geosite-geolocation-cn",
                     "geosite-cn",
-                    "geoip-cn"
+                    "geoip-cn",
+                    "geosite-private"
                 ],
                 "outbound": "🚀直接连接"
             },
@@ -474,8 +506,21 @@
             },
             {
                 "rule_set": [
-                    "geosite-geolocation-!cn",
+                    "geosite-ookla-speedtest",
+                    "geosite-test-ipv6"
+                ],
+                "outbound": "⚓️其他流量"
+            },
+            {
+                "rule_set": [
                     "geosite-category-doh"
+                ],
+                "outbound": "🌐DNS&配置规则"
+            },
+            {
+                "rule_set": [
+                    "geoip-tor",
+                    "geosite-geolocation-!cn"
                 ],
                 "outbound": "🔰国外流量"
             },
@@ -491,6 +536,7 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs",
+                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -498,6 +544,7 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs",
+                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -505,6 +552,7 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-cn.srs",
+                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -512,249 +560,304 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs",
+                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
-                "tag": "geosite-category-ads-all",
+                "tag": "geosite-private",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ads-all.srs",
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-private.srs",
+                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-dev-cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-dev-cn.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-dev-cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-ntp",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ntp.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ntp.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-pt",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-pt.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-pt.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-ddns",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ddns.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ddns.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-github",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/github.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-github.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-bing",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bing.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bing.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-dev",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-dev.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-dev.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-porn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-porn.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-porn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-microsoft-pki",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft-pki.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft-pki.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-microsoft-dev",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft-dev.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft-dev.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-doh",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-doh.srs"
-            },
-            {
-                "tag": "geoip-telegram",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-doh.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-telegram",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs"
-            },
-            {
-                "tag": "geoip-google",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-telegram.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-google",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs"
-            },
-            {
-                "tag": "geosite-google-cn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google-cn.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-ai-!cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-!cn.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ai-!cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-openai",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/OpenAI.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-openai.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-gemini",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google-gemini.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google-gemini.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-bilibili",
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili.srs",
+                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
                 "tag": "geosite-hbo",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/hbo.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-hbo.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-primevideo",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/primevideo.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-primevideo.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-microsoft",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-microsoft-cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/microsoft@cn.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft@cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-onedrive",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/onedrive.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-onedrive.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-tiktok",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tiktok.srs"
-            },
-            {
-                "tag": "geoip-netflix",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/netflix.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-tiktok.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-netflix",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/netflix.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-netflix.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-disney",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/disney.srs"
-            },
-            {
-                "tag": "geoip-apple",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo-lite/geoip/apple.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-disney.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-apple",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/apple.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-apple.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-bahamut",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/bahamut.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bahamut.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-spotify",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/spotify.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-spotify.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-youtube",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/youtube.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-youtube.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-media",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-media.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-media.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
-                "tag": "geosite-category-games",
+                "tag": "geosite-category-games-!cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-games-!cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
-                "tag": "geosite-xbox",
+                "tag": "geosite-category-game-platforms-download@cn",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/xbox.srs"
-            },
-            {
-                "tag": "geosite-dmm",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/dmm.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-game-platforms-download@cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             },
             {
                 "tag": "geosite-category-games-download",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-game-platforms-download.srs"
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-game-platforms-download.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-ookla-speedtest",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-ookla-speedtest.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-test-ipv6",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-test-ipv6.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geoip-tor",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geoip/tor.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
             }
         ],
         "final": "⚓️其他流量",
@@ -765,15 +868,28 @@
             "rewrite_tll": 60
         }
     },
+    "ntp": {
+        "enabled": true,
+        "server": "ntp.aliyun.com",
+        "server_port": 123,
+        "interval": "30m"
+    },
     "experimental": {
         "cache_file": {
             "enabled": true,
-            "store_rdrc": true
+            "path": "cache.db",
+            "store_fakeip": true,
+            "store_rdrc": false
         },
         "clash_api": {
             "external_controller": "127.0.0.1:9090",
-            "external_ui": "dashboard",
-            "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "external_ui": "./ui",
+            "access_control_allow_origin": [
+                "*"
+            ],
+            "access_control_allow_private_network": true,
+            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+            "external_ui_download_detour": "🌐DNS&配置规则",
             "secret": "",
             "default_mode": "Rule"
         }
