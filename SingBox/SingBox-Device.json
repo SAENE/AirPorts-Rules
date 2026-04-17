@@ -365,13 +365,7 @@
                 "rule_set": [
                     "geosite-github",
                     "geosite-bing",
-                    "geosite-tracker",
-                    "geosite-category-public-tracker",
-                    "geosite-category-pt",
-                    "geosite-category-porn",
-                    "geosite-category-dev",
-                    "geosite-microsoft-dev",
-                    "geosite-microsoft-pki"
+                    "geosite-microsoft-dev"
                 ],
                 "outbound": "🔰国外流量"
             },
@@ -499,6 +493,9 @@
             {
                 "rule_set": [
                     "geoip-tor",
+                    "geosite-tracker",
+                    "geosite-category-public-tracker",
+                    "geosite-category-pt",
                     "geosite-geolocation-!cn"
                 ],
                 "outbound": "🔰国外流量"
@@ -570,7 +567,7 @@
                 "tag": "geosite-tracker",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-tracker.srs",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
@@ -578,7 +575,7 @@
                 "tag": "geosite-category-public-tracker",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-public-tracker.srs",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
@@ -611,30 +608,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bing.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geosite-category-dev",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-dev.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geosite-category-porn",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-porn.srs",
-                "download_detour": "🌐DNS&配置规则",
-                "update_interval": "1d"
-            },
-            {
-                "tag": "geosite-microsoft-pki",
-                "type": "remote",
-                "format": "binary",
-                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft-pki.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
@@ -850,7 +823,7 @@
                 "tag": "geoip-tor",
                 "type": "remote",
                 "format": "binary",
-                "url": "https://github.com/MetaCubeX/meta-rules-dat/blob/sing/geo/geoip/tor.srs",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/tor.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             }
