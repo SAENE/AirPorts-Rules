@@ -445,7 +445,11 @@
                 "outbound": "Ⓜ️微软服务"
             },
             {
-                "rule_set": "geosite-category-game-platforms-download@cn",
+                "rule_set": [
+                    "geosite-category-game-platforms-download@cn",
+                    "geosite-category-games@cn",
+                    "geosite-category-games-!cn@cn"
+                ],
                 "outbound": "🚀直接连接"
             },
             {
@@ -459,7 +463,9 @@
                     {
                         "rule_set": [
                             "geosite-category-games-download",
-                            "geosite-category-game-platforms-download@cn"
+                            "geosite-category-game-platforms-download@cn",
+                            "geosite-category-games@cn",
+                            "geosite-category-games-!cn@cn"
                         ],
                         "invert": true
                     },
@@ -807,6 +813,22 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-games-!cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-category-games@cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-games@cn.srs",
+                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-category-games-!cn@cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games-!cn@cn.srs",
                 "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
