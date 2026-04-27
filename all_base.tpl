@@ -157,8 +157,15 @@ geox-url:
     mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.metadb
     geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat
     geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
-{% if default(request.clash.fakeip, "") == "true" %}
 rule-providers:
+    tor:
+        type: http
+        behavior: ipcidr
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+        path: ./ruleset/tor.mrs
+{% if default(request.clash.fakeip, "") == "true" %}
     fake-ip-filter:
         type: http
         behavior: domain
