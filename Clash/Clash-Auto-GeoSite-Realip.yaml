@@ -132,13 +132,13 @@ ntp:
   port: 123
   interval: 30
 rule-providers:
-    tor:
-        type: http
-        behavior: ipcidr
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
-        path: ./ruleset/fake_ip_filter.list
+  tor:
+      type: http
+      behavior: ipcidr
+      format: mrs
+      interval: 86400
+      url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+      path: ./ruleset/fake_ip_filter.list
 proxies:
   ~
 proxy-groups:

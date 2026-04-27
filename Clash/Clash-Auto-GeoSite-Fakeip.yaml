@@ -124,6 +124,13 @@ rule-providers:
     interval: 86400
     url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
     path: ./ruleset/fake_ip_filter.list
+  tor:
+      type: http
+      behavior: ipcidr
+      format: mrs
+      interval: 86400
+      url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+      path: ./ruleset/fake_ip_filter.list
 profile:
   store-selected: true
   store-fake-ip: true
