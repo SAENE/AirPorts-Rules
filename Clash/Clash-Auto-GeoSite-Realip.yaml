@@ -286,7 +286,7 @@ rules:
   - GEOSITE,github,🔰国外流量
   - GEOSITE,microsoft-dev,🔰国外流量
   - GEOSITE,bing,🔰国外流量
-  - RULE-SET,tor,🔰国外流量
+  - RULE-SET,tor,🔰国外流量,no-resolve
   - GEOSITE,openai,🇦🇮AI
   - GEOSITE,google-gemini,🔎Google
   - GEOSITE,category-ai-!cn,🇦🇮AI
