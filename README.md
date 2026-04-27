@@ -14,7 +14,7 @@
     - **优势**：配置文件极小，无需维护冗长的规则列表，加载速度极快。
 - **`Clash-Auto-GeoSite-Realip.yaml` / `Fakeip.yaml`**
     - **特性**：使用 `proxy-providers` 方式动态更新节点。
-    - **适用**：根据你的 DNS 策略选择 Real-IP 或 Fake-IP 模式。
+    - **适用**：根据你的 DNS 策略选择 Real-IP 或 Fake-IP 模式；无需部署subconverter即可更新订阅
 - **`geosite` 规则**
     - **特性**：基于 `meta-rules-dat` 转换。
     - **优化**：删除了 Keyword 项以提升匹配效率，仅保留 Domain 相关条目。
