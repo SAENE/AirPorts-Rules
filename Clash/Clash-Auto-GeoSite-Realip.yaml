@@ -1,0 +1,362 @@
+# 你的订阅链接
+proxy-providers:
+  Sub:
+    type: http
+    url: https://example.com/sub?xxxx
+    interval: 3600
+    proxy: DIRECT
+    path: ./providers/Sub.yaml
+    health-check:
+      enable: true
+      url: https://cp.cloudflare.com/generate_204
+      interval: 300
+    override:
+      skip-cert-verify: false
+      udp: true
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+allow-lan: true
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+dns:
+  enable: true
+  listen: :1053
+  ipv6: true
+  cache-algorithm: arc
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-range6: fdfe:dcba:9876::1/64
+  fake-ip-filter-mode: rule
+  fake-ip-filter:
+    - MATCH,real-ip
+  fake-ip-ttl: 1
+  prefer-h3: true
+  respect-rules: true
+  direct-nameserver-follow-policy: true
+  nameserver:
+    - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
+    - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
+    - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
+    - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
+    - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
+    - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
+  direct-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+    - https://doh.360.cn/dns-query
+  nameserver-policy:
+    geosite:cn,geolocation-cn,category-game-platforms-download,category-games,microsoft,apple,category-ntp,category-ddns:
+      - https://223.5.5.5/dns-query
+      - https://223.6.6.6/dns-query
+      - https://dns.alidns.com/dns-query
+      - https://doh.pub/dns-query
+      - https://doh.360.cn/dns-query
+    geosite:private:
+      - system
+  proxy-server-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+    - https://doh.360.cn/dns-query
+  default-nameserver:
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+    - https://101.198.198.198/dns-query
+    - https://120.53.53.53/dns-query
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  force-domain:
+    - +.google.com
+    - +.facebook.com
+    - +.youtube.com
+    - +.google.cn
+    - +.google.cn
+    - +.googleapis.cn
+    - +.hotels.cn
+    - +.keso.cn
+  skip-domain:
+    - +.apple.com
+    - Mijia Cloud
+    - dlg.io.mi.com
+  sniff:
+    TLS:
+      ports:
+        - 443
+        - 8443
+    HTTP:
+      ports:
+        - 80
+        - 8080-8880
+      override-destination: true
+    QUIC:
+      ports:
+        - 443
+        - 8443
+ipv6: true
+external-ui: ./ui
+external-ui-url: https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
+external-controller-cors:
+  allow-origins:
+    - "*"
+  allow-private-network: true
+tcp-concurrent: true
+unified-delay: true
+find-process-mode: strict
+global-client-fingerprint: random
+keep-alive-interval: 15
+keep-alive-idle: 15
+geo-auto-update: true
+geo-update-interval: 24
+geodata-mode: true
+geodata-loader: memconservative
+geox-url:
+  mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.metadb
+  geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat
+  geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+profile:
+  store-selected: true
+  store-fake-ip: true
+ntp:
+  enable: true
+  write-to-system: false
+  server: ntp.aliyun.com
+  port: 123
+  interval: 30
+rule-providers:
+    tor:
+        type: http
+        behavior: ipcidr
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+        path: ./ruleset/fake_ip_filter.list
+proxies:
+  ~
+proxy-groups:
+  - name: 🔰国外流量
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - ♻️自动选择
+      - 🔯故障转移
+      - 🚀直接连接
+  - name: ♻️自动选择
+    type: url-test
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    tolerance: 100
+    use:
+      - Sub
+    filter: (^(?!.*([2-9].*x|[2-9].*倍|[1-9][0-9].*x|[1-9][0-9].*倍)).*)
+  - name: 🔯故障转移
+    type: fallback
+    url: https://cp.cloudflare.com/generate_204
+    interval: 300
+    use:
+      - Sub
+    filter: .*
+  - name: "🌐DNS&配置规则"
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - 🚀直接连接
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: ⚓️其他流量
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - 🚀直接连接
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: ✈️Telegram
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🔎Google
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🇦🇮AI
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 📺哔哩哔哩
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🚀直接连接
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🎵TikTok
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🚀直接连接
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🎬国外媒体
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🍎苹果服务
+    type: select
+    proxies:
+      - 🚀直接连接
+      - 🔰国外流量
+      - ♻️自动选择
+  - name: Ⓜ️微软服务
+    type: select
+    proxies:
+      - 🚀直接连接
+      - 🔰国外流量
+      - ♻️自动选择
+  - name: 📟游戏平台
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🔰国外流量
+      - 🚀直接连接
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🔽游戏下载
+    type: select
+    use:
+      - Sub
+    filter: .*
+    proxies:
+      - 🚀直接连接
+      - 🔰国外流量
+      - ♻️自动选择
+      - 🔯故障转移
+  - name: 🚀直接连接
+    type: select
+    proxies:
+      - DIRECT
+rules:
+  - GEOSITE,category-ntp,🚀直接连接
+  - GEOSITE,category-ddns,🚀直接连接
+  - GEOSITE,microsoft@cn,Ⓜ️微软服务
+  - GEOSITE,onedrive,Ⓜ️微软服务
+  - GEOSITE,github,🔰国外流量
+  - GEOSITE,microsoft-dev,🔰国外流量
+  - GEOSITE,bing,🔰国外流量
+  - RULE-SET,tor,🔰国外流量
+  - GEOSITE,openai,🇦🇮AI
+  - GEOSITE,google-gemini,🔎Google
+  - GEOSITE,category-ai-!cn,🇦🇮AI
+  - GEOSITE,google,🔎Google
+  - GEOIP,google,🔎Google
+  - GEOSITE,telegram,✈️Telegram
+  - GEOIP,telegram,✈️Telegram
+  - GEOSITE,bilibili,📺哔哩哔哩
+  - GEOSITE,tiktok,🎵TikTok
+  - GEOSITE,category-media,🎬国外媒体
+  - GEOSITE,disney,🎬国外媒体
+  - GEOSITE,netflix,🎬国外媒体
+  - GEOSITE,bahamut,🎬国外媒体
+  - GEOSITE,spotify,🎬国外媒体
+  - GEOSITE,hbo,🎬国外媒体
+  - GEOSITE,primevideo,🎬国外媒体
+  - GEOSITE,youtube,🎬国外媒体
+  - GEOSITE,apple-tvplus,🎬国外媒体
+  - GEOSITE,appledaily,🎬国外媒体
+  - GEOSITE,category-game-platforms-download@cn,🚀直接连接
+  - GEOSITE,category-games@cn,🚀直接连接
+  - GEOSITE,category-games-!cn@cn,🚀直接连接
+  - GEOSITE,category-game-platforms-download,🔽游戏下载
+  - GEOSITE,category-games-!cn,📟游戏平台
+  - GEOSITE,apple,🍎苹果服务
+  - GEOSITE,microsoft,Ⓜ️微软服务
+  - GEOSITE,gfw,🔰国外流量
+  - GEOSITE,geolocation-cn,🚀直接连接
+  - GEOSITE,CN,🚀直接连接
+  - GEOIP,CN,🚀直接连接,no-resolve
+  - GEOIP,private,🚀直接连接,no-resolve
+  - GEOSITE,private,🚀直接连接
+  - GEOSITE,test-ipv6,⚓️其他流量
+  - GEOSITE,ookla-speedtest,⚓️其他流量
+  - GEOSITE,category-doh,🌐DNS&配置规则
+  - DOMAIN,dns.google,🌐DNS&配置规则
+  - DOMAIN,cloudflare-dns.com,🌐DNS&配置规则
+  - DOMAIN,1dot1dot1dot1.cloudflare-dns.com,🌐DNS&配置规则
+  - DOMAIN,one.one.one.one,🌐DNS&配置规则
+  - DOMAIN,adguard-dns.io,🌐DNS&配置规则
+  - DOMAIN,dns.adguard-dns.com,🌐DNS&配置规则
+  - DOMAIN,unfiltered.adguard-dns.com,🌐DNS&配置规则
+  - DOMAIN,dns.cloudflare.com,🌐DNS&配置规则
+  - DOMAIN,common.dot.dns.yandex.net,🌐DNS&配置规则
+  - DOMAIN,safe.dot.dns.yandex.net,🌐DNS&配置规则
+  - DOMAIN,family.dot.dns.yandex.net,🌐DNS&配置规则
+  - DOMAIN,doh.dns.sb,🌐DNS&配置规则
+  - DOMAIN,doh.opendns.com,🌐DNS&配置规则
+  - DOMAIN,dns.quad9.net,🌐DNS&配置规则
+  - IP-CIDR,1.1.1.1/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,1.0.0.1/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,8.8.8.8/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,8.8.4.4/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,77.88.8.7/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,77.88.8.3/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,185.222.222.222/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,45.11.45.11/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,77.88.8.8/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,77.88.8.1/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,77.88.8.88/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,77.88.8.2/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,94.140.14.14/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,94.140.15.15/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,94.140.14.141/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,94.140.14.140/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,208.67.222.222/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,9.9.9.9/32,🌐DNS&配置规则,no-resolve
+  - IP-CIDR,149.112.112.112/32,🌐DNS&配置规则,no-resolve
+  - GEOSITE,tracker,🔰国外流量
+  - GEOSITE,category-public-tracker,🔰国外流量
+  - GEOSITE,category-pt,🔰国外流量
+  - GEOSITE,geolocation-!cn,🔰国外流量
+  - MATCH,⚓️其他流量
