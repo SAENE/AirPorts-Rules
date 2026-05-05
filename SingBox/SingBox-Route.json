@@ -200,6 +200,17 @@
         },
         {
             "type": "selector",
+            "tag": "🐟漏网之鱼",
+            "outbounds": [
+                "🔰国外流量",
+                "🚀直接连接",
+                "♻️自动选择",
+                "{all}"
+            ],
+            "interrupt_exist_connections": true
+        },
+        {
+            "type": "selector",
             "tag": "✈️Telegram",
             "outbounds": [
                 "🔰国外流量",
@@ -533,6 +544,26 @@
                 "ip_is_private": true,
                 "action": "route",
                 "outbound": "🚀直接连接"
+            },
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "rule_set": [
+                            "geoip-cn"
+                        ],
+                        "invert": true
+                    },
+                    {
+                        "port": [
+                            80,
+                            443
+                        ]
+                    }
+                ],
+                "action": "route",
+                "outbound": "⚓️其他流量"
             }
         ],
         "rule_set": [
@@ -873,7 +904,7 @@
                 "update_interval": "1d"
             }
         ],
-        "final": "⚓️其他流量",
+        "final": "🐟漏网之鱼",
         "auto_detect_interface": true,
         "override_android_vpn": true,
         "default_domain_resolver": {
