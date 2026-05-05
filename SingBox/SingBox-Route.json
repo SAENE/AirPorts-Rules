@@ -383,6 +383,7 @@
                     "d.metacubex.one"
                 ],
                 "rule_set": [
+                    "geosite-category-ddns",
                     "geosite-category-ntp"
                 ],
                 "outbound": "🚀直接连接"
@@ -518,7 +519,6 @@
             },
             {
                 "rule_set": [
-                    "geosite-category-ddns",
                     "geosite-ookla-speedtest",
                     "geosite-test-ipv6"
                 ],

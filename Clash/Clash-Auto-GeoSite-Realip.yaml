@@ -290,6 +290,7 @@ proxy-groups:
       - DIRECT
 rules:
   - GEOSITE,category-ntp,🚀直接连接
+  - GEOSITE,category-ddns,🚀直接连接
   - GEOSITE,microsoft@cn,Ⓜ️微软服务
   - GEOSITE,onedrive,Ⓜ️微软服务
   - GEOSITE,github,🔰国外流量
@@ -330,7 +331,6 @@ rules:
   - GEOSITE,private,🚀直接连接
   - GEOSITE,test-ipv6,⚓️其他流量
   - GEOSITE,ookla-speedtest,⚓️其他流量
-  - GEOSITE,category-ddns,⚓️其他流量
   - GEOSITE,category-doh,🌐DNS&配置规则
   - DOMAIN,dns.google,🌐DNS&配置规则
   - DOMAIN,cloudflare-dns.com,🌐DNS&配置规则
