@@ -371,8 +371,6 @@ rules:
   - GEOSITE,category-pt,🔰国外流量
   - GEOSITE,geolocation-!cn,🔰国外流量
   - DST-PORT,80,⚓️其他流量
-  - DST-PORT,8080,⚓️其他流量
-  - DST-PORT,8443,⚓️其他流量
-  - DST-PORT,3478,⚓️其他流量
   - DST-PORT,443,⚓️其他流量
+  - NETWORK,udp,⚓️其他流量
   - MATCH,🐟漏网之鱼
