@@ -166,12 +166,12 @@ ntp:
     interval: 30
 rule-providers:
     tor:
-      type: http
-      behavior: ipcidr
-      format: mrs
-      interval: 86400
-      url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
-      path: ./ruleset/tor.mrs
+        type: http
+        behavior: ipcidr
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+        path: ./ruleset/tor.mrs
 {% if default(request.clash.fakeip, "") == "true" %}
     fake-ip-filter:
         type: http
