@@ -157,6 +157,15 @@ geox-url:
     mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.metadb
     geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat
     geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+profile:
+    store-selected: true
+    store-fake-ip: true
+ntp:
+    enable: true
+    write-to-system: false
+    server: ntp.aliyun.com
+    port: 123
+    interval: 30
 {% if default(request.clash.fakeip, "") == "true" %}
 rule-providers:
     fake-ip-filter:
@@ -168,15 +177,6 @@ rule-providers:
         path: ./ruleset/fake_ip_filter.list
 # clash.fakeip END
 {% endif %}
-profile:
-    store-selected: true
-    store-fake-ip: true
-ntp:
-    enable: true
-    write-to-system: false
-    server: ntp.aliyun.com
-    port: 123
-    interval: 30
 {% else %}
     nameserver:
         - https://223.5.5.5/dns-query
