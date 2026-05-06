@@ -159,7 +159,7 @@ proxy-groups:
     tolerance: 100
     use:
       - Sub
-    filter: (^(?!.*((?<![\d.])([2-9]|\d{2,})(\.\d+)?(x|倍)|(?<![\d.])1\.[1-9]+(x|倍))).*)
+    filter: (^(?!.*(官网|剩余流量|到期|过期|订阅|(?<![\d.])([2-9]|\d{2,})(\.\d+)?(x|倍)|(?<![\d.])1\.[1-9]+(x|倍))).*)
   - name: 🔯故障转移
     type: fallback
     url: https://cp.cloudflare.com/generate_204

@@ -59,8 +59,6 @@ dns:
 # clash.prefercn else
 {% else %}
     nameserver:
-        - "https://1.0.0.1/dns-query#ecs=111.222.0.0&ecs-override=true"
-        - "https://8.8.4.4/dns-query#ecs=111.222.0.0&ecs-override=true"
         - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
         - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
         - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"

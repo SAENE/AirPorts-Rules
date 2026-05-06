@@ -169,7 +169,7 @@
             "outbounds": [
                 "{all}"
             ],
-            "filter":[{"action":"exclude","keywords":["[2-9].*倍|[2-9].*x|[1-9][0-9].*x|[1-9][0-9].*倍"]}],
+            "filter":[{"action":"exclude","keywords":["官网|剩余流量|到期|过期|订阅|[2-9].*倍|[2-9].*x|[1-9][0-9].*x|[1-9][0-9].*倍"]}],
             "url": "https://cp.cloudflare.com/generate_204",
             "interval": "3m",
             "tolerance": 50,
