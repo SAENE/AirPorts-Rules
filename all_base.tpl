@@ -172,6 +172,13 @@ rule-providers:
       interval: 86400
       url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
       path: ./ruleset/tor.mrs
+  foreign_dns:
+    type: http
+    behavior: classical
+    format: yaml
+    interval: 86400
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/DNS/DNS_No_Resolve.yaml
+    path: ./ruleset/foreign_dns.list
 {% if default(request.clash.fakeip, "") == "true" %}
     fake-ip-filter:
         type: http
