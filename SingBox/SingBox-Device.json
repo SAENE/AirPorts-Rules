@@ -967,7 +967,7 @@
                 "*"
             ],
             "access_control_allow_private_network": true,
-            "external_ui_download_url": "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip",
+            "external_ui_download_url": "https://codeload.github.com/Zephyruso/zashboard/zip/refs/heads/gh-pages-cdn-fonts",
             "external_ui_download_detour": "🌐DNS&配置规则",
             "secret": "",
             "default_mode": "Rule"

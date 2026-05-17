@@ -101,7 +101,7 @@ sniffer:
         - 8443
 ipv6: true
 external-ui: ./ui
-external-ui-url: https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip
+external-ui-url: https://codeload.github.com/Zephyruso/zashboard/zip/refs/heads/gh-pages-cdn-fonts
 external-controller-cors:
   allow-origins:
     - "*"

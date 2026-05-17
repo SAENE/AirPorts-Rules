@@ -126,7 +126,8 @@ sniffer:
 ipv6: true
 external-ui: ./ui
 # external-ui-name: xd
-external-ui-url: "https://github.com/MetaCubeX/metacubexd/archive/refs/heads/gh-pages.zip"
+external-ui-url: "https://codeload.github.com/Zephyruso/zashboard/zip/refs/heads/gh-pages-cdn-fonts"
+# external-ui-url: "https://codeload.github.com/MetaCubeX/metacubexd/zip/refs/heads/gh-pages"
 external-controller-cors:
     allow-origins:
         - '*'
