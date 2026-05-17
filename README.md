@@ -1,6 +1,6 @@
 # 🚀 订阅转换规则集 (Subconverter Rules)
 
-本仓库提供针对 [Subconverter](https://github.com/tindy2013/subconverter) 及相关工具优化的订阅转换配置。核心目标是实现配置文件的**极致轻量化**与**自动化管理**。
+本仓库提供针对 [SubConverter-Extended](https://github.com/Aethersailor/SubConverter-Extended) 及相关工具优化的订阅转换配置。核心目标是实现配置文件的**极致轻量化**与**自动化管理**。
 
 ---
 
@@ -26,7 +26,7 @@
 
 ### 3. 通用基础模板
 - **`all_base.tpl`**
-    - 适用于 Subconverter 的基础模板，定义了标准的代理组结构和全局逻辑。
+    - 适用于 SubConverter-Extended 的基础模板，定义了标准的代理组结构和全局逻辑。
 
 ---
 

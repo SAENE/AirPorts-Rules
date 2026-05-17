@@ -166,15 +166,16 @@ ntp:
     server: ntp.aliyun.com
     port: 123
     interval: 30
-rule-providers:
-    tor:
-        type: http
-        behavior: ipcidr
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
-        path: ./ruleset/tor.mrs
+# rule-providers:
+#     tor:
+#         type: http
+#         behavior: ipcidr
+#         format: mrs
+#         interval: 86400
+#         url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+#         path: ./ruleset/tor.mrs
 {% if default(request.clash.fakeip, "") == "true" %}
+rule-providers:
     fake-ip-filter:
         type: http
         behavior: domain
