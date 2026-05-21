@@ -156,7 +156,7 @@ geox-url:
 # Lite
     mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.metadb
     geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat
-    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
+    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite-lite.dat
 profile:
     store-selected: true
     store-fake-ip: true
