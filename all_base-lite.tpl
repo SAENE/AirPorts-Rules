@@ -1,4 +1,5 @@
 {% if request.target == "clash" or request.target == "clashr" %}
+
 port: {{ default(global.clash.http_port, "7890") }}
 socks-port: {{ default(global.clash.socks_port, "7891") }}
 redir-port: {{ default(global.clash.redir-port, "7892") }}
@@ -21,11 +22,11 @@ dns:
     fake-ip-filter:
 {% if default(request.clash.fakeip, "") == "true" %}
         - RULE-SET,fake-ip-filter,real-ip
-        - GEOSITE,connectivity-check,real-ip
+        - RULE-SET,connectivity-check,real-ip
         - GEOSITE,bilibili,fake-ip
         - GEOSITE,tiktok,fake-ip
         - GEOSITE,CN,real-ip
-        - GEOSITE,geolocation-cn,real-ip
+        - RULE-SET,geolocation-cn,real-ip
         - GEOSITE,private,real-ip
         - MATCH,fake-ip
 # clash.fakeip else
@@ -46,7 +47,7 @@ dns:
         - https://doh.360.cn/dns-query
     nameserver-policy:
 {% if default(request.clash.fakeip, "") == "false" %}
-        "geosite:gfw,geolocation-!cn":
+        "rule-set:gfw,geolocation-!cn":
             - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
             - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
             - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
@@ -69,7 +70,13 @@ dns:
         - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     nameserver-policy:
-        "geosite:cn,geolocation-cn,category-game-platforms-download,category-games,microsoft,apple,category-ntp,category-ddns":
+        "rule-set:geolocation-cn,category-game-platforms-download,category-games-!cn,category-ntp,category-ddns":
+            - https://223.5.5.5/dns-query
+            - https://223.6.6.6/dns-query
+            - https://dns.alidns.com/dns-query
+            - https://doh.pub/dns-query
+            - https://doh.360.cn/dns-query
+        "geosite:cn,microsoft,apple":
             - https://223.5.5.5/dns-query
             - https://223.6.6.6/dns-query
             - https://dns.alidns.com/dns-query
@@ -165,8 +172,65 @@ ntp:
     server: ntp.aliyun.com
     port: 123
     interval: 30
-{% if default(request.clash.fakeip, "") == "true" %}
+# rule-providers:
+#     tor:
+#         type: http
+#         behavior: ipcidr
+#         format: mrs
+#         interval: 86400
+#         url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
+#         path: ./ruleset/tor.mrs
 rule-providers:
+    gfw:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/gfw.mrs
+        path: ./ruleset/gfw.mrs
+    geolocation-!cn:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/geolocation-!cn.mrs
+        path: ./ruleset/geolocation-!cn.mrs
+    geolocation-cn:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/geolocation-cn.mrs
+        path: ./ruleset/geolocation-cn.mrs
+    category-game-platforms-download:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-game-platforms-download.mrs
+        path: ./ruleset/category-game-platforms-download.mrs
+    category-games-!cn:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-games-!cn.mrs
+        path: ./ruleset/category-games-!cn.mrs
+    category-ddns:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-ddns.mrs
+        path: ./ruleset/category-ddns.mrs
+    category-ntp:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-ntp.mrs
+        path: ./ruleset/category-ntp.mrs
+{% if default(request.clash.fakeip, "") == "true" %}
     fake-ip-filter:
         type: http
         behavior: domain
@@ -174,6 +238,13 @@ rule-providers:
         interval: 86400
         url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
         path: ./ruleset/fake_ip_filter.list
+    connectivity-check:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/connectivity-check.mrs
+        path: ./ruleset/connectivity-check.mrs
 # clash.fakeip END
 {% endif %}
 {% else %}
@@ -183,6 +254,8 @@ rule-providers:
         - https://120.53.53.53/dns-query
         - https://doh.pub/dns-query
     fallback:
+        - 'https://1.1.1.1/dns-query'
+        - 'https://8.8.8.8/dns-query'
         - 'https://dns.cloudflare.com/dns-query'
         - 'https://dns.google/dns-query'
     fallback-filter:
@@ -214,6 +287,7 @@ Rule: ~
 {% endif %}
 # clash END
 {% endif %}
+
 {% if request.target == "surge" %}
 
 [General]
@@ -459,7 +533,6 @@ enhanced-mode-by-rule = true
 
 {% endif %}
 {% if request.target == "singbox" %}
-
 {
     "log": {
         "disabled": false,
@@ -469,79 +542,113 @@ enhanced-mode-by-rule = true
     "dns": {
         "servers": [
             {
-                "tag": "dns_proxy",
-                "address": "tls://1.1.1.1",
-                "address_resolver": "dns_resolver"
+                "tag": "default_dns",
+                "type": "udp",
+                "server": "119.29.29.29"
             },
             {
-                "tag": "dns_direct",
-                "address": "h3://dns.alidns.com/dns-query",
-                "address_resolver": "dns_resolver",
-                "detour": "DIRECT"
+                "tag": "alidns",
+                "type": "tls",
+                "server": "223.5.5.5"
             },
             {
-                "tag": "dns_fakeip",
-                "address": "fakeip"
+                "tag": "cloudflare",
+                "type": "https",
+                "server": "cloudflare-dns.com",
+                "server_port": 443,
+                "domain_resolver": "alidns",
+                "detour": "🔰国外流量"
             },
             {
-                "tag": "dns_resolver",
-                "address": "223.5.5.5",
-                "detour": "DIRECT"
-            },
-            {
-                "tag": "block",
-                "address": "rcode://success"
+                "tag": "google",
+                "type": "https",
+                "server": "dns.google",
+                "server_port": 443,
+                "domain_resolver": "alidns",
+                "detour": "🔰国外流量"
             }
         ],
-        "rules": [
+    "rules": [
             {
-                "outbound": [
-                    "any"
-                ],
-                "server": "dns_resolver"
-            },
-            {
-                "geosite": [
-                    "category-ads-all"
-                ],
-                "server": "dns_block",
-                "disable_cache": true
-            },
-            {
-                "geosite": [
-                    "geolocation-!cn"
-                ],
                 "query_type": [
-                    "A",
-                    "AAAA"
+                    "SVCB",
+                    "HTTPS"
                 ],
-                "server": "dns_fakeip"
+                "action": "predefined",
+                "rcode": "REFUSED"
             },
             {
-                "geosite": [
-                    "geolocation-!cn"
+                "clash_mode": "Global",
+                "action": "route",
+                "server": "google"
+            },
+            {
+                "clash_mode": "Direct",
+                "action": "route",
+                "server": "default_dns"
+            },
+            {
+                "rule_set": [
+                    "geosite-geolocation-cn",
+                    "geosite-cn"
                 ],
-                "server": "dns_proxy"
+                "action": "route",
+                "server": "default_dns"
+            }, 
+            {
+                "type": "logical",
+                "mode": "and",
+                "rules": [
+                    {
+                        "rule_set": "geosite-geolocation-!cn",
+                        "invert": true
+                    },
+                    {
+                        "rule_set": "geoip-cn"
+                    }
+                ],
+                "action": "route",
+                "server": "alidns"
             }
         ],
-        "final": "dns_direct",
-        "independent_cache": true,
-        "fakeip": {
-            "enabled": true,
-            {% if default(request.singbox.ipv6, "") == "1" %}
-            "inet6_range": "fc00::\/18",
-            {% endif %}
-            "inet4_range": "198.18.0.0\/15"
-        }
-    },
-    "ntp": {
-        "enabled": true,
-        "server": "time.apple.com",
-        "server_port": 123,
-        "interval": "30m",
-        "detour": "DIRECT"
+        "final": "cloudflare",
+        "disable_cache": false,
+        "disable_expire": false,
+        "independent_cache": true
     },
     "inbounds": [
+    {% if default(request.singbox.route, "") == "1" %}
+        {
+            "type": "direct",
+            "tag": "dns-in",
+            {% if bool(default(global.singbox.allow_lan, "")) %}
+            "listen": "0.0.0.0",
+            {% else %}
+            "listen": "127.0.0.1",
+            {% endif %}
+            "listen_port": 7874
+        },
+        {
+            "type": "redirect",
+            "tag": "redirect-in",
+            {% if bool(default(global.singbox.allow_lan, "")) %}
+            "listen": "0.0.0.0",
+            {% else %}
+            "listen": "127.0.0.1",
+            {% endif %}
+            "listen_port": 7894
+        },
+        {
+            "type": "tproxy",
+            "tag": "tproxy-in",
+            {% if bool(default(global.singbox.allow_lan, "")) %}
+            "listen": "0.0.0.0",
+            {% else %}
+            "listen": "127.0.0.1",
+            {% endif %}
+            "listen_port": 7896
+        },
+    {% endif %}
         {
             "type": "mixed",
             "tag": "mixed-in",
@@ -550,36 +657,110 @@ enhanced-mode-by-rule = true
             {% else %}
             "listen": "127.0.0.1",
             {% endif %}
-            "listen_port": {{ default(global.singbox.mixed_port, "2080") }}
+            "listen_port": {{ default(global.singbox.mixed_port, "7893") }}
         },
         {
             "type": "tun",
             "tag": "tun-in",
-            "inet4_address": "172.19.0.1/30",
-            {% if default(request.singbox.ipv6, "") == "1" %}
-            "inet6_address": "fdfe:dcba:9876::1/126",
-            {% endif %}
+            "interface_name": "singbox",
+            "address": [
+                {% if default(request.singbox.ipv6, "") == "1" %}
+                "fdfe:dcba:9876::1\/126",
+                {% endif %}
+                "172.18.0.1\/30"
+            ],
             "auto_route": true,
             "strict_route": true,
-            "stack": "mixed",
-            "sniff": true
+            "sniff": true,
+            "stack": "mixed"
         }
     ],
     "outbounds": [],
     "route": {
-        "rules": [],
-        "auto_detect_interface": true
+        "rules": [
+            {
+                "inbound": "in",
+                "action": "sniff",
+                "timeout": "1s"
+            },
+            {
+                "inbound": "in",
+                "protocol": "dns",
+                "port": [
+                    53
+                ],
+                "action": "hijack-dns"
+            },
+            {
+                "protocol": "stun",
+                "action": "reject",
+                "method": "default"
+            },
+            {
+                "clash_mode": "Direct",
+                "action": "route",
+                "outbound": "🚀直接连接"
+            },
+            {
+                "clash_mode": "Global",
+                "action": "route",
+                "outbound": "GLOBAL"
+            },
+            {
+                "ip_is_private": true,
+                "action": "route",
+                "outbound": "🚀直接连接"
+            }
+        ],
+        "rule_set": [
+            {
+                "tag": "geoip-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https:\/\/fastly.jsdelivr.net\/gh\/SagerNet\/sing-geoip@rule-set\/geoip-cn.srs",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https:\/\/fastly.jsdelivr.net\/gh\/SagerNet\/sing-geosite@rule-set\/geosite-cn.srs",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-geolocation-cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https:\/\/fastly.jsdelivr.net\/gh\/SagerNet\/sing-geosite@rule-set\/geosite-geolocation-cn.srs",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geosite-geolocation-!cn",
+                "type": "remote",
+                "format": "binary",
+                "url": "https:\/\/fastly.jsdelivr.net\/gh\/SagerNet\/sing-geosite@rule-set\/geosite-geolocation-!cn.srs",
+                "update_interval": "1d"
+            }
+        ],
+        "auto_detect_interface": true,
+        "override_android_vpn": true,
+        "default_domain_resolver": {
+            "server": "default_dns",
+            "rewrite_tll": 60
+        }
     },
     "experimental": {
         "cache_file": {
             "enabled": true,
-            "store_fakeip": true
+            "store_rdrc": true
         },
         "clash_api": {
             "external_controller": "{{ default(global.clash.external_controller, "127.0.0.1:9090") }}",
-            "external_ui": "dashboard"
+            "external_ui": "dashboard",
+            "external_ui_download_url": "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
+            "secret": "",
+            "default_mode": "rule"
         }
     }
 }
-
 {% endif %}
