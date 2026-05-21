@@ -180,8 +180,57 @@ ntp:
 #         interval: 86400
 #         url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
 #         path: ./ruleset/tor.mrs
-{% if default(request.clash.fakeip, "") == "true" %}
 rule-providers:
+    gfw:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/gfw.mrs
+        path: ./ruleset/gfw.mrs
+    geolocation-!cn:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/geolocation-!cn.mrs
+        path: ./ruleset/geolocation-!cn.mrs
+    geolocation-cn:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/geolocation-cn.mrs
+        path: ./ruleset/geolocation-cn.mrs
+    category-game-platforms-download:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-game-platforms-download.mrs
+        path: ./ruleset/category-game-platforms-download.mrs
+    category-games-!cn:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-games-!cn.mrs
+        path: ./ruleset/category-games-!cn.mrs
+    category-ddns:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-ddns.mrs
+        path: ./ruleset/category-ddns.mrs
+    category-ntp:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-ntp.mrs
+        path: ./ruleset/category-ntp.mrs
+{% if default(request.clash.fakeip, "") == "true" %}
     fake-ip-filter:
         type: http
         behavior: domain
