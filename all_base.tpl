@@ -22,11 +22,11 @@ dns:
     fake-ip-filter:
 {% if default(request.clash.fakeip, "") == "true" %}
         - RULE-SET,fake-ip-filter,real-ip
-        - GEOSITE,connectivity-check,real-ip
+        - RULE-SET,connectivity-check,real-ip
         - GEOSITE,bilibili,fake-ip
         - GEOSITE,tiktok,fake-ip
         - GEOSITE,CN,real-ip
-        - GEOSITE,geolocation-cn,real-ip
+        - RULE-SET,geolocation-cn,real-ip
         - GEOSITE,private,real-ip
         - MATCH,fake-ip
 # clash.fakeip else
@@ -47,7 +47,7 @@ dns:
         - https://doh.360.cn/dns-query
     nameserver-policy:
 {% if default(request.clash.fakeip, "") == "false" %}
-        "geosite:gfw,geolocation-!cn":
+        "rule-set:gfw,geolocation-!cn":
             - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
             - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
             - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
@@ -70,7 +70,13 @@ dns:
         - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     nameserver-policy:
-        "geosite:cn,geolocation-cn,category-game-platforms-download,category-games,microsoft,apple,category-ntp,category-ddns":
+        "rule-set:geolocation-cn,category-game-platforms-download,category-games-!cn,category-ntp,category-ddns":
+            - https://223.5.5.5/dns-query
+            - https://223.6.6.6/dns-query
+            - https://dns.alidns.com/dns-query
+            - https://doh.pub/dns-query
+            - https://doh.360.cn/dns-query
+        "geosite:cn,microsoft,apple":
             - https://223.5.5.5/dns-query
             - https://223.6.6.6/dns-query
             - https://dns.alidns.com/dns-query
@@ -183,6 +189,13 @@ rule-providers:
         interval: 86400
         url: https://cdn.jsdelivr.net/gh/juewuy/ShellCrash@dev/public/fake_ip_filter.list
         path: ./ruleset/fake_ip_filter.list
+    connectivity-check:
+        type: http
+        behavior: domain
+        format: mrs
+        interval: 86400
+        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/connectivity-check.mrs
+        path: ./ruleset/connectivity-check.mrs
 # clash.fakeip END
 {% endif %}
 {% else %}
