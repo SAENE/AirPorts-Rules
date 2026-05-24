@@ -302,13 +302,13 @@ rules:
   - GEOSITE,microsoft-dev,🔰国外流量
   - GEOSITE,bing,🔰国外流量
   - RULE-SET,tor,🔰国外流量,no-resolve
-  - GEOSITE,openai,🇦🇮AI
   - GEOSITE,google-gemini,🔎Google
-  - GEOSITE,category-ai-!cn,🇦🇮AI
   - GEOSITE,google,🔎Google
-  - GEOIP,google,🔎Google
+  - GEOIP,google,🔎Google,no-resolve
+  - GEOSITE,openai,🇦🇮AI
+  - GEOSITE,category-ai-!cn,🇦🇮AI
   - GEOSITE,telegram,✈️Telegram
-  - GEOIP,telegram,✈️Telegram
+  - GEOIP,telegram,✈️Telegram,no-resolve
   - GEOSITE,bilibili,📺哔哩哔哩
   - GEOSITE,tiktok,🎵TikTok
   - GEOSITE,category-media,🎬国外媒体
