@@ -413,7 +413,6 @@
             {
                 "rule_set": [
                     "geosite-netflix",
-                    "geosite-bahamut",
                     "geosite-spotify",
                     "geosite-disney",
                     "geosite-hbo",
@@ -461,6 +460,7 @@
                     },
                     {
                         "rule_set": [
+                            "geosite-bahamut",
                             "geosite-category-games-!cn"
                         ]
                     }
