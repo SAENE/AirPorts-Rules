@@ -23,10 +23,11 @@ dns:
 {% if default(request.clash.fakeip, "") == "true" %}
         - RULE-SET,fake-ip-filter,real-ip
         - RULE-SET,connectivity-check,real-ip
+        - RULE-SET,category-ddns,real-ip
+        - RULE-SET,category-ntp,real-ip
         - GEOSITE,bilibili,fake-ip
         - GEOSITE,tiktok,fake-ip
         - GEOSITE,CN,real-ip
-        - RULE-SET,geolocation-cn,real-ip
         - GEOSITE,private,real-ip
         - MATCH,fake-ip
 # clash.fakeip else
@@ -70,12 +71,6 @@ dns:
         - https://doh.pub/dns-query
         - https://doh.360.cn/dns-query
     nameserver-policy:
-        "rule-set:geolocation-cn,category-game-platforms-download,category-games-!cn,category-ntp,category-ddns":
-            - https://223.5.5.5/dns-query
-            - https://223.6.6.6/dns-query
-            - https://dns.alidns.com/dns-query
-            - https://doh.pub/dns-query
-            - https://doh.360.cn/dns-query
         "geosite:cn,microsoft,apple":
             - https://223.5.5.5/dns-query
             - https://223.6.6.6/dns-query
@@ -181,41 +176,6 @@ ntp:
 #         url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/tor.mrs
 #         path: ./ruleset/tor.mrs
 rule-providers:
-    gfw:
-        type: http
-        behavior: domain
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/gfw.mrs
-        path: ./ruleset/gfw.mrs
-    geolocation-!cn:
-        type: http
-        behavior: domain
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/geolocation-!cn.mrs
-        path: ./ruleset/geolocation-!cn.mrs
-    geolocation-cn:
-        type: http
-        behavior: domain
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/geolocation-cn.mrs
-        path: ./ruleset/geolocation-cn.mrs
-    category-game-platforms-download:
-        type: http
-        behavior: domain
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-game-platforms-download.mrs
-        path: ./ruleset/category-game-platforms-download.mrs
-    category-games-!cn:
-        type: http
-        behavior: domain
-        format: mrs
-        interval: 86400
-        url: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geoip/category-games-!cn.mrs
-        path: ./ruleset/category-games-!cn.mrs
     category-ddns:
         type: http
         behavior: domain

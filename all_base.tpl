@@ -22,6 +22,8 @@ dns:
 {% if default(request.clash.fakeip, "") == "true" %}
         - RULE-SET,fake-ip-filter,real-ip
         - GEOSITE,connectivity-check,real-ip
+        - GEOSITE,category-ddns,real-ip
+        - GEOSITE,category-ntp,real-ip
         - GEOSITE,bilibili,fake-ip
         - GEOSITE,tiktok,fake-ip
         - GEOSITE,CN,real-ip
