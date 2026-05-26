@@ -167,8 +167,8 @@ ntp:
     server: ntp.aliyun.com
     port: 123
     interval: 30
-{% if default(request.clash.fakeip, "") == "true" %}
 rule-providers:
+{% if default(request.clash.fakeip, "") == "true" %}
     fake-ip-filter:
         type: http
         behavior: domain
