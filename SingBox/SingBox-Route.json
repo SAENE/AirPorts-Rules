@@ -202,8 +202,8 @@
             "type": "selector",
             "tag": "🐟漏网之鱼",
             "outbounds": [
-                "🔰国外流量",
                 "🚀直接连接",
+                "🔰国外流量",
                 "♻️自动选择",
                 "{all}"
             ],
@@ -353,9 +353,6 @@
                     },
                     {
                         "protocol": "dns"
-                    },
-                    {
-                        "inbound": "dns-in"
                     }
                 ],
                 "action": "hijack-dns"
@@ -406,7 +403,8 @@
             {
                 "rule_set": [
                     "geosite-gemini",
-                    "geosite-google"
+                    "geosite-google",
+                    "geoip-google"
                 ],
                 "outbound": "🔎Google"
             },
@@ -419,7 +417,8 @@
             },
             {
                 "rule_set": [
-                    "geosite-telegram"
+                    "geosite-telegram",
+                    "geoip-telegram"
                 ],
                 "outbound": "✈️Telegram"
             },
@@ -525,6 +524,27 @@
                 "outbound": "⚓️其他流量"
             },
             {
+                "ip_cidr": [
+                    "1.1.1.1/32",
+                    "1.0.0.1/32",
+                    "8.8.8.8/32",
+                    "8.8.4.4/32",
+                    "77.88.8.7/32",
+                    "77.88.8.3/32",
+                    "185.222.222.222/32",
+                    "45.11.45.11/32",
+                    "77.88.8.8/32",
+                    "77.88.8.1/32",
+                    "77.88.8.88/32",
+                    "77.88.8.2/32",
+                    "94.140.14.14/32",
+                    "94.140.15.15/32",
+                    "94.140.14.141/32",
+                    "94.140.14.140/32",
+                    "208.67.222.222/32",
+                    "9.9.9.9/32",
+                    "149.112.112.112/32"
+                ],
                 "rule_set": [
                     "geosite-category-doh"
                 ],
@@ -592,7 +612,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geoip@rule-set/geoip-cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -600,7 +619,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -608,7 +626,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -616,7 +633,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-geolocation-!cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -624,7 +640,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-private.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -632,7 +647,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-dev-cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -640,7 +654,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ntp.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -648,7 +661,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/tracker.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -656,7 +668,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-public-tracker.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -664,7 +675,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-pt.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -672,7 +682,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ddns.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -680,7 +689,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-github.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -688,7 +696,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bing.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -696,7 +703,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft-dev.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -704,7 +710,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-doh.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -712,7 +717,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-telegram.srs",
-                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geoip-telegram",
+                "type": "remote",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
                 "update_interval": "1d"
             },
             {
@@ -720,7 +731,13 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google.srs",
-                "download_detour": "🌐DNS&配置规则",
+                "update_interval": "1d"
+            },
+            {
+                "tag": "geoip-google",
+                "type": "remote",
+                "format": "binary",
+                "url": " https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
                 "update_interval": "1d"
             },
             {
@@ -728,7 +745,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-ai-!cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -736,7 +752,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-openai.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -744,7 +759,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-google-gemini.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -752,7 +766,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bilibili.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -760,7 +773,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-hbo.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -768,7 +780,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-primevideo.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -776,7 +787,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -784,7 +794,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-microsoft@cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -792,7 +801,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-onedrive.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -800,7 +808,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-tiktok.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -808,7 +815,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-netflix.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -816,7 +822,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-disney.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -824,7 +829,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-apple.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -832,7 +836,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-bahamut.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -840,7 +843,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-spotify.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -848,7 +850,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-youtube.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -856,7 +857,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-media.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -864,7 +864,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-games-!cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -872,7 +871,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-games@cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -880,7 +878,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-games-!cn@cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -888,7 +885,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-game-platforms-download@cn.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -896,7 +892,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-category-game-platforms-download.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -904,7 +899,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-ookla-speedtest.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -912,7 +906,6 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/SagerNet/sing-geosite@rule-set/geosite-test-ipv6.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             },
             {
@@ -920,13 +913,11 @@
                 "type": "remote",
                 "format": "binary",
                 "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/tor.srs",
-                "download_detour": "🌐DNS&配置规则",
                 "update_interval": "1d"
             }
         ],
         "final": "🐟漏网之鱼",
         "auto_detect_interface": true,
-        "override_android_vpn": true,
         "default_domain_resolver": {
             "server": "alidns",
             "rewrite_tll": 60

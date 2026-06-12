@@ -190,8 +190,8 @@ proxy-groups:
       - Sub
     filter: .*
     proxies:
-      - 🔰国外流量
       - 🚀直接连接
+      - 🔰国外流量
       - ♻️自动选择
       - 🔯故障转移
   - name: ✈️Telegram
