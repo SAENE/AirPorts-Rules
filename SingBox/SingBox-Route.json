@@ -114,6 +114,7 @@
         {
             "type": "direct",
             "tag": "dns-in",
+            "network": "udp",
             "listen": "::",
             "listen_port": 7874
         },
@@ -345,16 +346,7 @@
                 "timeout": "1s"
             },
             {
-                "type": "logical",
-                "mode": "or",
-                "rules": [
-                    {
-                        "port": 53
-                    },
-                    {
-                        "protocol": "dns"
-                    }
-                ],
+                "inbound": ["dns-in"],
                 "action": "hijack-dns"
             },
             {
@@ -737,7 +729,7 @@
                 "tag": "geoip-google",
                 "type": "remote",
                 "format": "binary",
-                "url": " https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
                 "update_interval": "1d"
             },
             {

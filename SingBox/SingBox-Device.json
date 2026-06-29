@@ -717,7 +717,7 @@
                 "tag": "geoip-google",
                 "type": "remote",
                 "format": "binary",
-                "url": " https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
+                "url": "https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/google.srs",
                 "update_interval": "1d"
             },
             {
