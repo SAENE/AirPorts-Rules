@@ -337,7 +337,7 @@ rules:
   - GEOSITE,tracker,🔰国外流量
   - GEOSITE,category-public-tracker,🔰国外流量
   - GEOSITE,category-pt,🔰国外流量
-  - GEOSITE,geolocation-!cn,🔰国外流量
+  - GEOSITE,geolocation-!cn,⚓️其他流量
   - DST-PORT,80,⚓️其他流量
   - DST-PORT,8080,⚓️其他流量
   - DST-PORT,443,⚓️其他流量

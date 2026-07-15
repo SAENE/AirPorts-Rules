@@ -558,6 +558,12 @@
                 "outbound": "🚀直接连接"
             },
             {
+                "rule_set": [
+                    "geosite-geolocation-!cn"
+                ],
+                "outbound": "⚓️其他流量"
+            },
+            {
                 "type": "logical",
                 "mode": "and",
                 "rules": [
