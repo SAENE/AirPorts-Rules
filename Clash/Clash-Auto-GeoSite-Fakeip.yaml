@@ -294,6 +294,7 @@ rules:
   - DST-PORT,3479,REJECT
   - DST-PORT,5349,REJECT
   - DOMAIN-KEYWORD,stun,REJECT
+  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
   - GEOSITE,category-ntp,🚀直接连接
   - GEOSITE,category-ddns,🚀直接连接
   - GEOSITE,microsoft@cn,Ⓜ️微软服务
