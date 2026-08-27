@@ -48,11 +48,11 @@ dns:
         - https://doh.360.cn/dns-query
     nameserver-policy:
 {% if default(request.clash.fakeip, "") == "false" %}
-        "geosite:gfw,geolocation-!cn":
-            - "https://mozilla.cloudflare-dns.com/dns-query#ecs=111.222.0.0&ecs-override=true"
-            - "https://dns.cloudflare.com/dns-query#ecs=1.0.1.0&ecs-override=true"
-            - "https://dns.google/dns-query#ecs=1.0.1.0&ecs-override=true"
-            - "https://dns.nextdns.io/dns-query#ecs=111.222.0.0&ecs-override=true"
+        "geosite:gfw":
+            - "https://mozilla.cloudflare-dns.com/dns-query"
+            - "https://dns.cloudflare.com/dns-query"
+            - "https://dns.google/dns-query"
+            - "https://dns.nextdns.io/dns-query"
 # clash.fakeip END
 {% endif %}
         "geosite:private":
@@ -77,6 +77,11 @@ dns:
             - https://dns.alidns.com/dns-query
             - https://doh.pub/dns-query
             - https://doh.360.cn/dns-query
+        "geosite:gfw":
+            - "https://mozilla.cloudflare-dns.com/dns-query"
+            - "https://dns.cloudflare.com/dns-query"
+            - "https://dns.google/dns-query"
+            - "https://dns.nextdns.io/dns-query"
         "geosite:private":
             - system
 # clash.prefercn END
@@ -102,7 +107,6 @@ sniffer:
         - '+.facebook.com'
         - '+.youtube.com'
         - '+.google.cn'
-        - '+.google.cn'
         - '+.googleapis.cn'
         - '+.hotels.cn'
         - '+.keso.cn'
@@ -120,10 +124,10 @@ sniffer:
                 - 80
                 - 8080-8880
             override-destination: true
-        QUIC:
-            ports:
-                - 443
-                - 8443
+#        QUIC:
+#            ports:
+#                - 443
+#                - 8443
 ipv6: true
 external-ui: ./ui
 # external-ui-name: xd
@@ -157,7 +161,7 @@ geox-url:
 # Lite
 #    mmdb: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.metadb
     geoip: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip-lite.dat
-    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite-lite.dat
+    geosite: https://fastly.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat
 profile:
     store-selected: true
     store-fake-ip: true
