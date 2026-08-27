@@ -50,6 +50,11 @@ dns:
     - https://doh.pub/dns-query
     - https://doh.360.cn/dns-query
   nameserver-policy:
+    "geosite:gfw":
+      - "https://mozilla.cloudflare-dns.com/dns-query"
+      - "https://dns.cloudflare.com/dns-query"
+      - "https://dns.google/dns-query"
+      - "https://dns.nextdns.io/dns-query"
     geosite:private:
       - system
   proxy-server-nameserver:

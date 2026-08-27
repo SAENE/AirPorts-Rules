@@ -48,6 +48,13 @@ dns:
         - https://doh.360.cn/dns-query
     nameserver-policy:
 {% if default(request.clash.fakeip, "") == "false" %}
+        "rule-set:gfw,geolocation-!cn":
+            - "https://mozilla.cloudflare-dns.com/dns-query"
+            - "https://dns.cloudflare.com/dns-query"
+            - "https://dns.google/dns-query"
+            - "https://dns.nextdns.io/dns-query"
+# clash.fakeip else
+{% else %}
         "rule-set:gfw":
             - "https://mozilla.cloudflare-dns.com/dns-query"
             - "https://dns.cloudflare.com/dns-query"
