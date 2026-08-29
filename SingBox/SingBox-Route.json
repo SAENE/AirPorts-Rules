@@ -86,15 +86,24 @@
                 "server": "alidns"
             },
             {
+                "action": "evaluate",
+                "server": "google"
+            },
+            {
                 "type": "logical",
                 "mode": "and",
+                "match_response": true,
                 "rules": [
                     {
-                        "rule_set": "geosite-geolocation-!cn",
+                        "rule_set": [
+                            "geosite-geolocation-!cn"
+                        ],
                         "invert": true
                     },
                     {
-                        "rule_set": "geoip-cn"
+                        "rule_set": [
+                            "geoip-cn"
+                        ]
                     }
                 ],
                 "action": "route",
@@ -170,7 +179,14 @@
             "outbounds": [
                 "{all}"
             ],
-            "filter":[{"action":"exclude","keywords":["官网|剩余流量|限速|到期|过期|订阅|[2-9].*倍|[2-9].*x|[1-9][0-9].*x|[1-9][0-9].*倍"]}],
+            "filter": [
+                {
+                    "action": "exclude",
+                    "keywords": [
+                        "官网|剩余流量|限速|到期|过期|订阅|[2-9].*倍|[2-9].*x|[1-9][0-9].*x|[1-9][0-9].*倍"
+                    ]
+                }
+            ],
             "url": "https://cp.cloudflare.com/generate_204",
             "interval": "3m",
             "tolerance": 50,
@@ -346,7 +362,9 @@
                 "timeout": "1s"
             },
             {
-                "inbound": ["dns-in"],
+                "inbound": [
+                    "dns-in"
+                ],
                 "action": "hijack-dns"
             },
             {
@@ -356,7 +374,9 @@
             },
             {
                 "network": "udp",
-                "port": [443],
+                "port": [
+                    443
+                ],
                 "action": "reject",
                 "method": "default"
             },
@@ -917,7 +937,7 @@
             "enabled": true,
             "path": "cache.db",
             "store_fakeip": true,
-            "store_rdrc": false
+            "store_dns": false
         },
         "clash_api": {
             "external_controller": "127.0.0.1:9090",

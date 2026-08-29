@@ -86,15 +86,24 @@
                 "server": "alidns"
             },
             {
+                "action": "evaluate",
+                "server": "google"
+            },
+            {
                 "type": "logical",
                 "mode": "and",
+                "match_response": true,
                 "rules": [
                     {
-                        "rule_set": "geosite-geolocation-!cn",
+                        "rule_set": [
+                            "geosite-geolocation-!cn"
+                        ],
                         "invert": true
                     },
                     {
-                        "rule_set": "geoip-cn"
+                        "rule_set": [
+                            "geoip-cn"
+                        ]
                     }
                 ],
                 "action": "route",
@@ -107,8 +116,7 @@
         "strategy": "prefer_ipv4",
         "client_subnet": "111.222.0.0",
         "disable_cache": false,
-        "disable_expire": false,
-        "independent_cache": true
+        "disable_expire": false
     },
     "inbounds": [
         {
@@ -351,7 +359,9 @@
             },
             {
                 "network": "udp",
-                "port": [443],
+                "port": [
+                    443
+                ],
                 "action": "reject",
                 "method": "default"
             },
@@ -912,7 +922,7 @@
             "enabled": true,
             "path": "cache.db",
             "store_fakeip": true,
-            "store_rdrc": false
+            "store_dns": false
         },
         "clash_api": {
             "external_controller": "127.0.0.1:9090",
