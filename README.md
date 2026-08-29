@@ -23,10 +23,11 @@
     - **适用**：根据你的 DNS 策略选择 Real-IP 或 Fake-IP 模式；无需部署subconverter即可更新订阅
 
 
-### 2. Sing-Box 配置系列
-- **`SingBox/` 目录**
-    - 适用于 [sing-box-subscribe](https://github.com/NiuStar/sing-box-subscribe) 的转换规则。
-    - > ⚠️ **注意**：`SingBox-Route` 配置目前处于测试阶段，请按需调试。
+### ~~2. Sing-Box 配置系列~~
+- ~~**`SingBox/` 目录**~~
+    - ~~适用于 [sing-box-subscribe](https://github.com/NiuStar/sing-box-subscribe) 的转换规则。~~
+    - > ~~⚠️ **注意**：`SingBox-Route` 配置目前处于测试阶段，请按需调试。~~
+> 抛弃，天天改来改去，自己用去吧
 
 ### 3. 通用基础模板
 - **`all_base.tpl`**
