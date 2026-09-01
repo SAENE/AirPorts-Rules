@@ -292,11 +292,9 @@ proxy-groups:
     proxies:
       - DIRECT
 rules:
-  - DST-PORT,3478,REJECT
-  - DST-PORT,3479,REJECT
-  - DST-PORT,5349,REJECT
   - DOMAIN-KEYWORD,stun,REJECT
-  - AND,((NETWORK,UDP),(DST-PORT,443)),REJECT
+  - AND,((NETWORK,UDP),(DST-PORT,3478-3481/5349/19302-19309),(NOT,((GEOIP,CN)))),REJECT
+  - AND,((NETWORK,UDP),((NETWORK,UDP),(DST-PORT,443),(NOT,((GEOIP,CN)))),REJECT
   - GEOSITE,category-ntp,🚀直接连接
   - GEOSITE,category-ddns,🚀直接连接
   - GEOSITE,microsoft@cn,Ⓜ️微软服务

@@ -4,6 +4,12 @@
         "level": "info",
         "timestamp": true
     },
+    "http_clients": [
+        {
+            "tag": "rule-set-download",
+            "detour": "🌐DNS&配置规则"
+        }
+    ],
     "dns": {
         "servers": [
             {
@@ -52,7 +58,7 @@
                 "tag": "fakeip",
                 "type": "fakeip",
                 "inet4_range": "198.18.0.0\/16",
-                "inet6_range": "fdfe:dcba:9876::1/64"
+                "inet6_range": "fdfe:dcba:9876::/64"
             }
         ],
         "rules": [
@@ -84,10 +90,6 @@
                     "geosite-cn"
                 ],
                 "server": "alidns"
-            },
-            {
-                "action": "evaluate",
-                "server": "google"
             },
             {
                 "type": "logical",
@@ -437,7 +439,6 @@
                 "rule_set": [
                     "geosite-netflix",
                     "geosite-spotify",
-                    "geosite-disney",
                     "geosite-hbo",
                     "geosite-primevideo",
                     "geosite-youtube",
@@ -906,9 +907,10 @@
         ],
         "final": "🐟漏网之鱼",
         "auto_detect_interface": true,
+        "default_http_client": "rule-set-download",
         "default_domain_resolver": {
             "server": "alidns",
-            "rewrite_tll": 60
+            "rewrite_ttl": 60
         }
     },
     "ntp": {
