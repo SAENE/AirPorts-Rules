@@ -295,7 +295,7 @@ proxy-groups:
     proxies:
       - DIRECT
 rules:
-  - DOMAIN-KEYWORD,stun,REJECT
+  - AND,((DOMAIN-KEYWORD,stun),(NOT,((GEOIP,CN)))),REJECT
   - AND,((NETWORK,UDP),(DST-PORT,3478-3481/5349/19302-19309),(NOT,((GEOIP,CN)))),REJECT
   - AND,((NETWORK,UDP),((NETWORK,UDP),(DST-PORT,443),(NOT,((GEOIP,CN)))),REJECT
   - GEOSITE,category-ntp,🚀直接连接
